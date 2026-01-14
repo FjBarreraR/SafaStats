@@ -28,6 +28,10 @@ class Review
     #[ORM\JoinColumn(name:'id_user' , nullable: true)]
     private ?User $user = null;
 
+    public function __construct()
+    {
+    }
+
     public function getId(): ?int
     {
         return $this->id;

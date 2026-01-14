@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Dinosaurs
+{% endblock %}
+
+{% block body %}
+
+    <h1>Dinosaurs</h1>
+
+    {% for dinosaur in dinosaurs %}
+        <p>dinosaur.name</p>
+    {% endfor %}
+
+{% endblock %}
