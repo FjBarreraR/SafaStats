@@ -32,8 +32,8 @@ class Dinosaurs
     #[ORM\Column(name: 'period', length: 255, nullable: true)]
     private ?string $period = null;
 
-    #[ORM\Column(name: 'existed', nullable: true, enumType: Existed::class)]
-    private ?Existed $existed = null;
+    #[ORM\Column(name: 'existed', length: 255 ,nullable: true)]
+    private ?string $existed = null;
 
     #[ORM\Column(name: 'region', length: 200, nullable: true)]
     private ?string $region = null;

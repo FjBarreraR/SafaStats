@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-enum Rol
+enum Rol: string
 {
-    case ADMIN;
-    case USER;
+    case ADMIN = 'Admin';
+    case USER = 'User';
 }
