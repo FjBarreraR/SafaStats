@@ -8,8 +8,9 @@
 
     <h1>Dinosaurs</h1>
 
-    {% for dino in dinosaurs %}
+    {% for dino in dinosaurios %}
         <p>{{ dino.name }}</p>
+        <img src="{{ dino.image }}" style="width: 50%; height: 50%">
     {% endfor %}
 
 {% endblock %}

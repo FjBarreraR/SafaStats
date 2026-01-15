@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Dinosaurs
+{% endblock %}
+
+{% block body %}
+
+    <h1>Dinosaur: {{ dinosaur.name }}</h1>
+
+    <p><strong>Weight: </strong>{{ dinosaur.weight }}</p>
+    <p><strong>Height: </strong>{{ dinosaur.height }}</p>
+    <p><strong>Lenght: </strong>{{ dinosaur.lenght }}</p>
+    <img src="{{ dinosaur.image }}" alt="" style="width: 50%; height: 50%;">
+
+{% endblock %}

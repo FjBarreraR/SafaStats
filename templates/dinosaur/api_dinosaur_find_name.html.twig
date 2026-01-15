@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Dinosaurs
+{% endblock %}
+
+{% block body %}
+
+    <h1>Dinosaur: {{ dinosaurio.name }}</h1>
+
+    <p><strong>Weight: </strong>{{ dinosaurio.weight }}</p>
+    <p><strong>Height: </strong>{{ dinosaurio.height }}</p>
+    <p><strong>Lenght: </strong>{{ dinosaurio.length }}</p>
+    <img src="{{ dinosaurio.image }}" alt="" style="width: 50%; height: 50%;">
+
+{% endblock %}

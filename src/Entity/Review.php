@@ -6,7 +6,7 @@ use App\Repository\ReviewRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ReviewRepository::class)]
-#[ORM\Table(name: 'review', schema: 'dinosaursProject')]
+#[ORM\Table(name: 'review', schema: 'dinosaurs_project')]
 class Review
 {
     #[ORM\Id]

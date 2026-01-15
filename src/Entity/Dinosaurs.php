@@ -6,7 +6,7 @@ use App\Repository\DinosaursRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DinosaursRepository::class)]
-#[ORM\Table(name: 'dinosaur', schema: 'dinosaursProject')]
+#[ORM\Table(name: 'dinosaur', schema: 'dinosaurs_project')]
 class Dinosaurs
 {
     #[ORM\Id]
