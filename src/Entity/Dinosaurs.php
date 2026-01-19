@@ -26,8 +26,8 @@ class Dinosaurs
     #[ORM\Column(name: 'lenght', length: 100, nullable: true)]
     private ?string $lenght = null;
 
-    #[ORM\Column(name: 'diet', nullable: true, enumType: Diet::class)]
-    private ?Diet $diet = null;
+    #[ORM\Column(name: 'diet', length: 255, nullable: true)]
+    private ?string $diet = null;
 
     #[ORM\Column(name: 'period', length: 255, nullable: true)]
     private ?string $period = null;
@@ -38,8 +38,8 @@ class Dinosaurs
     #[ORM\Column(name: 'region', length: 200, nullable: true)]
     private ?string $region = null;
 
-    #[ORM\Column(name: 'type', length: 200, nullable: true)]
-    private ?Type $type = null;
+    #[ORM\Column(name: 'type', length: 255, nullable: true)]
+    private ?string $type = null;
 
     #[ORM\Column(name: 'description', length: 10000, nullable: true)]
     private ?string $description = null;
@@ -103,12 +103,12 @@ class Dinosaurs
         return $this;
     }
 
-    public function getDiet(): ?Diet
+    public function getDiet(): ?string
     {
         return $this->diet;
     }
 
-    public function setDiet(?Diet $diet): static
+    public function setDiet(?string $diet): static
     {
         $this->diet = $diet;
 
@@ -149,6 +149,16 @@ class Dinosaurs
         $this->region = $region;
 
         return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(?string $type): void
+    {
+        $this->type = $type;
     }
 
     public function getDescription(): ?string
