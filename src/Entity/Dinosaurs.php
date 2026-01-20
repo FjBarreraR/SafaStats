@@ -14,6 +14,9 @@ class Dinosaurs
     #[ORM\Column(name: 'id')]
     private ?int $id = null;
 
+    #[ORM\Column(name:"code", length: 100 )]
+    private ?string $code = null;
+
     #[ORM\Column( name: 'name', length: 150, nullable: true)]
     private ?string $name = null;
 
@@ -23,8 +26,8 @@ class Dinosaurs
     #[ORM\Column(name: 'height', length: 100, nullable: true)]
     private ?string $height = null;
 
-    #[ORM\Column(name: 'lenght', length: 100, nullable: true)]
-    private ?string $lenght = null;
+    #[ORM\Column(name: 'length', length: 100, nullable: true)]
+    private ?string $length = null;
 
     #[ORM\Column(name: 'diet', length: 255, nullable: true)]
     private ?string $diet = null;
@@ -53,6 +56,16 @@ class Dinosaurs
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    public function setCode(?string $code): void
+    {
+        $this->code = $code;
     }
 
     public function getName(): ?string
@@ -91,14 +104,14 @@ class Dinosaurs
         return $this;
     }
 
-    public function getLenght(): ?string
+    public function getLength(): ?string
     {
-        return $this->lenght;
+        return $this->length;
     }
 
-    public function setLenght(?string $lenght): static
+    public function setLength(?string $length): static
     {
-        $this->lenght = $lenght;
+        $this->lenght = $length;
 
         return $this;
     }

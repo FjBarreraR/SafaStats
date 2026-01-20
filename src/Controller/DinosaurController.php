@@ -8,24 +8,26 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class DinosaurController extends AbstractController
 {
     // BASE DE DATOS LOCAL
-    #[Route('/got/dinosaur', name: 'app_dinosaur')]
-    public function index(): Response
-    {
-        return $this->render('dinosaur/list_dinosaur.html.twig', [
-            'controller_name' => 'DinosaurController',
-        ]);
-    }
+//    #[Route('/got/dinosaur', name: 'list_dinosaur')]
+//    public function index(): Response
+//    {
+//        return $this->render('dinosaur/list_dinosaur.html.twig', [
+//            'controller_name' => 'DinosaurController',
+//        ]);
+//    }
 
-    #[Route('/got/dinosaur/list', name: 'list_dinosaur')]
+    #[Route('/dinosaur', name: 'app_dinosaur')]
     public function listDinosaurs(DinosaursRepository $repository): Response {
         $dinosaurs = $repository->findAll();
 
         return $this->render('dinosaur/list_dinosaur.html.twig', [
+            'controller_name' => 'DinosaurController',
             'dinosaurs' => $dinosaurs,
         ]);
     }
