@@ -17,40 +17,40 @@ class Dinosaurs
     #[ORM\Column(name:"code", length: 100 )]
     private ?string $code = null;
 
-    #[ORM\Column( name: 'name', length: 150, nullable: true)]
+    #[ORM\Column( name: 'name', length: 150, nullable: false)]
     private ?string $name = null;
 
-    #[ORM\Column(name: 'weight', length: 100, nullable: true)]
+    #[ORM\Column(name: 'weight', length: 100, nullable: false)]
     private ?string $weight = null;
 
-    #[ORM\Column(name: 'height', length: 100, nullable: true)]
+    #[ORM\Column(name: 'height', length: 100, nullable: false)]
     private ?string $height = null;
 
     #[ORM\Column(name: 'length', length: 100, nullable: true)]
     private ?string $length = null;
 
-    #[ORM\Column(name: 'diet', length: 255, nullable: true)]
+    #[ORM\Column(name: 'diet', length: 255, nullable: false)]
     private ?string $diet = null;
 
-    #[ORM\Column(name: 'period', length: 255, nullable: true)]
+    #[ORM\Column(name: 'period', length: 255, nullable: false)]
     private ?string $period = null;
 
-    #[ORM\Column(name: 'existed', length: 255 ,nullable: true)]
+    #[ORM\Column(name: 'existed', length: 255 ,nullable: false)]
     private ?string $existed = null;
 
-    #[ORM\Column(name: 'region', length: 200, nullable: true)]
+    #[ORM\Column(name: 'region', length: 200, nullable: false)]
     private ?string $region = null;
 
-    #[ORM\Column(name: 'type', length: 255, nullable: true)]
+    #[ORM\Column(name: 'type', length: 255, nullable: false)]
     private ?string $type = null;
 
-    #[ORM\Column(name: 'description', length: 10000, nullable: true)]
+    #[ORM\Column(name: 'description', length: 10000, nullable: false)]
     private ?string $description = null;
 
-    #[ORM\Column(name: 'image', length: 800, nullable: true)]
+    #[ORM\Column(name: 'image', length: 800, nullable: false)]
     private ?string $image = null;
 
-    #[ORM\Column(name: 'ispopular', nullable: true)]
+    #[ORM\Column(name: 'ispopular', nullable: false)]
     private ?bool $isPopular = null;
 
     public function getId(): ?int

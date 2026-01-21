@@ -15,7 +15,7 @@ class apiDinosaurs
     }
 
     public function getAllDinosaurs(): array {
-        $response = $this->client->request('GET', 'https://dinoapi.brunosouzadev.com/api/dinosaurs');
+        $response = $this->client->request('GET', 'https://dinoapi.brunosouzadev.com/api/dinosaurs/');
 
         return $response->toArray();
     }

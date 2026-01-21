@@ -14,18 +14,18 @@ class Review
     #[ORM\Column(name: 'id')]
     private ?int $id = null;
 
-    #[ORM\Column(name: 'comment', length: 10000, nullable: true)]
+    #[ORM\Column(name: 'comment', length: 10000, nullable: false)]
     private ?string $comment = null;
 
-    #[ORM\Column(name: 'rating', nullable: true)]
+    #[ORM\Column(name: 'rating', nullable: false)]
     private ?int $rating = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(name:'id_dinosaur' , nullable: true)]
+    #[ORM\JoinColumn(name:'id_dinosaur' , nullable: false)]
     private ?Dinosaurs $dinosaur = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(name:'id_user' , nullable: true)]
+    #[ORM\JoinColumn(name:'id_user' , nullable: false)]
     private ?User $user = null;
 
     public function __construct()
