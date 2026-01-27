@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,6 +25,8 @@ class UserController extends AbstractController
             $new_user = new User();
             $new_user->setEmail($request->request->get('email'));
             $password_text = $request->request->get('password');
+            $new_user->setRole(['ROLE_USER']);
+
 
             $hashedPassword = $passwordHasher->hashPassword(
                 $new_user,
@@ -39,6 +42,14 @@ class UserController extends AbstractController
         }
 
         return $this->render('user/register.html.twig', [
+        ]);
+    }
+
+    #[Route('/users', name: 'users_app')]
+    public function index(UserRepository $userRepository): Response
+    {
+        return $this->render('user/seeUser.html.twig', [
+            'users' => $userRepository->findAll(),
         ]);
     }
 }

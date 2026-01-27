@@ -73,7 +73,7 @@
                     </div>
                 </div>
 
-                {# --- Sección de Estadísticas Físicas (Weight, Height, Length) --- #}
+                {# --- Sección de Estadísticas Físicas --- #}
                 <div class="bg-light p-4 border-top border-bottom">
                     <div class="row text-center">
                         <div class="col-md-4 mb-3 mb-md-0">
@@ -100,11 +100,48 @@
                 </div>
 
                 {# --- Sección de Descripción --- #}
-                <div class="p-4 p-lg-5">
+                <div class="p-4 p-lg-5 border-bottom">
                     <h4 class="text-primary mb-3">Description</h4>
                     <div class="text-muted lead" style="font-size: 1.1rem; line-height: 1.8;">
-                        {# Usamos nl2br para respetar los saltos de línea de la BDD #}
                         {{ dinosaur.description|nl2br }}
+                    </div>
+                </div>
+
+                {# --- SECCIÓN DE REVIEWS (NUEVA) --- #}
+                <div class="p-4 p-lg-5 bg-white">
+                    <h4 class="text-primary mb-4">User Reviews</h4>
+
+                    {% if app.user %}
+                        <div class="card bg-light border-0 mb-4">
+                            <div class="card-body">
+                                <h6 class="mb-3">Leave a review as: <span class="text-primary">{{ app.user.email }}</span></h6>
+                                <form action="#" method="POST">
+                                    <div class="mb-3">
+                                        <textarea class="form-control" rows="3" placeholder="What do you think about the {{ dinosaur.name }}?"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Post Review</button>
+                                </form>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info">
+                            Please <a href="#">login</a> to leave a review.
+                        </div>
+                    {% endif %}
+
+                    {# Lista de Reviews (Ejemplo estático o bucle) #}
+                    <div class="review-list">
+                        {% for review in dinosaur.reviews|default([]) %}
+                            <div class="border-bottom pb-3 mb-3">
+                                <div class="d-flex justify-content-between">
+                                    <strong class="text-dark">{{ review.userEmail }}</strong>
+                                    <small class="text-muted">{{ review.createdAt|date('Y-m-d') }}</small>
+                                </div>
+                                <p class="mb-0 text-muted mt-2">{{ review.content }}</p>
+                            </div>
+                        {% else %}
+                            <p class="text-muted italic">No reviews yet. Be the first!</p>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

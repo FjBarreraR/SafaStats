@@ -1,17 +1,60 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AdminController!{% endblock %}
+{% block title %}Admin Dashboard{% endblock %}
 
 {% block body %}
-    <style>
-        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-    </style>
+    <div class="container d-flex flex-column justify-content-start align-items-center vh-100 pt-5">
 
-    <div class="example-wrapper">
-        <h1>Hello {{ controller_name }}! ✅</h1>
+        <h2 class="mb-4">Panel de Control</h2>
 
-        <p>{{ content }}</p>
+        <div class="row g-4 justify-content-center w-100">
+            <div class="col-md-3">
+                <a href="#" class="text-decoration-none text-white">
+                    <div class="card text-center text-white bg-dark-blue card-hover h-100">
+                        <div class="card-body py-5">
+                            <img src="{{ asset('images/dataLoad.png') }}" alt="Data" width="64" height="64" class="icon-white mb-3">
+                            <h3 class="card-title">Data Load</h3>
+                        </div>
+                    </div>
+                </a>
+            </div>
 
+            <div class="col-md-3">
+                <a href="{{ path('category_app') }}" class="text-decoration-none text-white">
+                    <div class="card text-center text-white bg-yellow card-hover h-100">
+                        <div class="card-body py-5">
+                            <img src="{{ asset('images/categories.png') }}" alt="Categories" width="64" height="64" class="mb-3" style="filter: brightness(0);">
+                            <h3 class="card-title text-dark">Categories</h3>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-3">
+                <a href="{{ path('app_dinosaur') }}" class="text-decoration-none text-white">
+                    <div class="card text-center text-white bg-blue card-hover h-100">
+                        <div class="card-body py-5">
+                            <img src="{{ asset('images/dinos.png') }}" alt="Dinos" width="64" height="64" class="icon-white mb-3">
+                            <h3 class="card-title">Dinosaurs</h3>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-3">
+                <a href="{{ path('users_app') }}" class="text-decoration-none text-white">
+                    <div class="card text-center text-white bg-green card-hover h-100">
+                        <div class="card-body py-5">
+                            <img src="{{ asset('images/user.png') }}" alt="Users" width="64" height="64" class="icon-white mb-3">
+                            <h3 class="card-title">Users Panel</h3>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <a href="{{ path('app_home') }}" class="btn btn-outline-dark">Volver al Home</a>
+        </div>
     </div>
 {% endblock %}

@@ -1,19 +1,82 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Dinosaurs{% endblock %}
+{% block title %}Dinosaurs List{% endblock %}
+
 {% block body %}
-    <style>
-        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-    </style>
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Dinosaur Database</h2>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="#" class="btn bg-green text-black">Create New Dino</a>
+            {% endif %}
+        </div>
 
-    <div class="example-wrapper">
-        <h1>Dinosaurs</h1>
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <table class="table table-striped table-hover align-middle">
+                    <thead class="table-dark">
+                    <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Diet</th>
+                        <th>Period</th>
+                        <th>Region</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for dinosaur in dinosaurs %}
+                        <tr>
+                            {# 1. Imagen: Mapeado a 'image' #}
+                            <td>
+                                <img src="{{ dinosaur.image|default('https://via.placeholder.com/50') }}"
+                                     class="rounded-circle"
+                                     alt="{{ dinosaur.name }}"
+                                     style="object-fit: cover;"
+                                     width="50" height="50">
+                            </td>
 
-        {% for d in dinosaurs %}
+                            {# 2. Nombre: Mapeado a 'name' + Icono si es Popular #}
+                            <td class="fw-bold">
+                                {{ dinosaur.name }}
+                                {% if dinosaur.isPopular %}
+                                    <span class="text-warning ms-1" title="Popular Dinosaur">★</span>
+                                {% endif %}
+                            </td>
 
-            <p>{{ d.name }} - {{ d.diet }}</p>
+                            {# 3. Tipo: Mapeado a 'type' #}
+                            <td>{{ dinosaur.type }}</td>
 
-        {% endfor %}
+                            {# 4. Dieta: Mapeado a 'diet' #}
+                            <td>
+                                {# Lógica visual opcional para la dieta #}
+                                <span class="badge {% if 'carnivore' in dinosaur.diet|lower %}bg-danger{% elseif 'herbivore' in dinosaur.diet|lower %}bg-success{% else %}bg-secondary{% endif %}">
+                                    {{ dinosaur.diet }}
+                                </span>
+                            </td>
+
+                            {# 5. Periodo: Mapeado a 'period' #}
+                            <td>{{ dinosaur.period }}</td>
+
+                            {# 6. Región: Mapeado a 'region' #}
+                            <td><small class="text-muted">{{ dinosaur.region }}</small></td>
+
+                            <td>
+                                <a href="{{ path('app_dinosaur_show', { id: dinosaur.id }) }}" class="btn btn-sm btn-outline-primary">View</a>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <a href="#" class="btn btn-sm btn-outline-danger">Edit</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="7" class="text-center py-4">No dinosaurs found.</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 {% endblock %}

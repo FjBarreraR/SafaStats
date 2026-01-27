@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\apiDinosaurs;
+use App\Entity\Dinosaurs;
 use App\Repository\DinosaursRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -32,31 +33,39 @@ class DinosaurController extends AbstractController
         ]);
     }
 
-    #[Route('/got/dinosaur/{id}', name: 'show_dinosaur')]
-    public function dinosaur(DinosaursRepository $repository, int $id): Response {
-        $dinosaur = $repository->find($id);
+//    #[Route('/dinosaur/{id}', name: 'show_dinosaur')]
+//    public function dinosaur(DinosaursRepository $repository, int $id): Response {
+//        $dinosaur = $repository->find($id);
+//
+//        return $this->render('dinosaur/dinosaur_id.html.twig', [
+//            'dinosaur' => $dinosaur,
+//        ]);
+//    }
 
+    #[Route('/dinosaur/{id}', name: 'app_dinosaur_show', methods: ['GET'])]
+    public function show(Dinosaurs $dinosaur): Response
+    {
         return $this->render('dinosaur/dinosaur_id.html.twig', [
             'dinosaur' => $dinosaur,
         ]);
     }
 
     // API
-    #[Route('/api/dinosaurs', name: 'api_dinosaurios_all')]
-    public function mostrarDinosauriosApi(apiDinosaurs $api): Response {
-        $dinosaurios = $api->getAllDinosaurs();
-
-        return $this->render('dinosaur/api_dinosaur.html.twig', [
-            'dinosaurios' => $dinosaurios,
-        ]);
-    }
-
-    #[Route('/api/dinosaurs/{name}', name: 'api_dinosaurio_name')]
-    public function mostrarDinosaurioApi(string $name, apiDinosaurs $api): Response {
-        $dinosaurio = $api->getDinosaurName($name);
-
-        return $this->render('dinosaur/api_dinosaur_find_name.html.twig', [
-            'dinosaurio' => $dinosaurio[0],
-        ]);
-    }
+//    #[Route('/api/dinosaurs', name: 'api_dinosaurios_all')]
+//    public function mostrarDinosauriosApi(apiDinosaurs $api): Response {
+//        $dinosaurios = $api->getAllDinosaurs();
+//
+//        return $this->render('dinosaur/api_dinosaur.html.twig', [
+//            'dinosaurios' => $dinosaurios,
+//        ]);
+//    }
+//
+//    #[Route('/api/dinosaurs/{name}', name: 'api_dinosaurio_name')]
+//    public function mostrarDinosaurioApi(string $name, apiDinosaurs $api): Response {
+//        $dinosaurio = $api->getDinosaurName($name);
+//
+//        return $this->render('dinosaur/api_dinosaur_find_name.html.twig', [
+//            'dinosaurio' => $dinosaurio[0],
+//        ]);
+//    }
 }

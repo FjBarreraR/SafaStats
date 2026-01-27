@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\DinosaursRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DinosaursRepository::class)]
@@ -52,6 +53,9 @@ class Dinosaurs
 
     #[ORM\Column(name: 'ispopular', nullable: false)]
     private ?bool $isPopular = null;
+
+    #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'dinosaurs')]
+    private ?Collection $categories;
 
     public function getId(): ?int
     {
@@ -111,7 +115,7 @@ class Dinosaurs
 
     public function setLength(?string $length): static
     {
-        $this->lenght = $length;
+        $this->length = $length;
 
         return $this;
     }

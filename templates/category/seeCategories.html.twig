@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lista de Categorías{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-5">
+            <h2 class="fw-bold text-uppercase">Categorías Disponibles</h2>
+
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('app_category_new') }}" class="btn btn-success px-4 shadow-sm">
+                    <i class="bi bi-plus-lg"></i> Nueva Categoría
+                </a>
+            {% endif %}
+        </div>
+
+        <div class="row g-4">
+            {% for category in categories %}
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card shadow-sm h-100 border-0">
+                        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center py-3">
+                            <h5 class="mb-0">{{ category.name }}</h5>
+                            <span class="badge bg-primary rounded-pill">{{ category.dinosaurs|length }} Dinos</span>
+                        </div>
+
+                        <div class="card-body d-flex flex-column justify-content-center bg-light">
+                            <p class="text-muted small text-center mb-3">Explora las especies registradas en esta sección.</p>
+                            <a href="{{ path('app_category_show', {'id': category.id}) }}" class="btn btn-outline-primary w-100">
+                                <i class="bi bi-eye"></i> Ver Dinosaurios
+                            </a>
+                        </div>
+
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <div class="card-footer bg-white d-flex justify-content-between gap-2 border-top-0 pb-3">
+                                <a href="{{ path('app_category_edit', {'id': category.id}) }}" class="btn btn-sm btn-warning flex-grow-1">
+                                    <i class="bi bi-pencil-square"></i> Editar
+                                </a>
+
+                                <form method="post" action="{{ path('app_category_delete', {'id': category.id}) }}"
+                                      class="flex-grow-1"
+                                      onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta categoría? Se borrarán los vínculos con los dinosaurios.');">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ category.id) }}">
+                                    <button class="btn btn-sm btn-danger w-100">
+                                        <i class="bi bi-trash"></i> Eliminar
+                                    </button>
+                                </form>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-12 text-center mt-5">
+                    <div class="alert alert-light border shadow-sm">
+                        <p class="text-muted fs-5 mb-0">Aún no has creado ninguna categoría.</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="mt-5 border-top pt-3">
+            <a href="{{ path('category_app') }}" class="btn btn-link text-decoration-none text-secondary">
+                <i class="bi bi-arrow-left"></i> Volver al Panel de Gestión
+            </a>
+        </div>
+    </div>
+{% endblock %}

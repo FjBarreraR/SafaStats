@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Category Management{% endblock %}
+
+{% block body %}
+    <div class="container d-flex flex-column justify-content-start align-items-center vh-100 pt-5">
+
+        <nav aria-label="breadcrumb" class="w-100 mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('admin') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Categories Management</li>
+            </ol>
+        </nav>
+
+        <h2 class="mb-5">Gestión de Categorías</h2>
+
+        <div class="row g-4 justify-content-center w-100">
+            <div class="col-md-4">
+                <a href="{{ path('app_category_index') }}" class="text-decoration-none">
+                    <div class="card text-center text-white bg-blue card-hover h-100 shadow-sm">
+                        <div class="card-body py-5">
+                            <i class="bi bi-collection-fill mb-3" style="font-size: 64px;"></i>
+                            <h3 class="card-title">Ver Categorías</h3>
+                            <p class="card-text opacity-75">Listado, edición y borrado de categorías existentes.</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <a href="{{ path('app_category_new') }}" class="text-decoration-none">
+                    <div class="card text-center text-white bg-green card-hover h-100 shadow-sm">
+                        <div class="card-body py-5">
+                            <i class="bi bi-plus-circle-dotted mb-3" style="font-size: 64px;"></i>
+                            <h3 class="card-title text-white">Nueva Categoría</h3>
+                            <p class="card-text opacity-75 text-white">Configurar una nueva categoría de dinosaurios.</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <a href="{{ path('admin') }}" class="btn btn-outline-dark px-4">
+                <i class="bi bi-arrow-left"></i> Volver al Panel
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2) !important;
+        }
+        .bg-blue { background-color: #007bff; }
+        .bg-green { background-color: #28a745; }
+    </style>
+{% endblock %}

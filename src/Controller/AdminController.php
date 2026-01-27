@@ -12,8 +12,13 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class AdminController extends AbstractController
 {
+    #[Route('/admin', name: 'admin')]
+    public function index(): Response
+    {
+        return $this->render('admin/admin.html.twig');
+    }
     #[Route('/admin/dinosaur/load', name: 'app_admin')]
-    public function index(HttpClientInterface $httpClient, EntityManagerInterface $entityManager): Response
+    public function loadData(HttpClientInterface $httpClient, EntityManagerInterface $entityManager): Response
     {
         $response = $httpClient->request('GET', 'https://dinoapi.brunosouzadev.com/api/dinosaurs');
 

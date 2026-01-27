@@ -1,3 +1,14 @@
 body {
-    background-color: skyblue;
+    /* Ruta a tu imagen (puede ser local o URL) */
+    background-image: url('../images/t-rex.jpeg');
+
+    /* Ajustes para que ocupe toda la pantalla sin repetirse */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    /* Importante: Asegura que el body ocupe el alto total */
+    min-height: 100vh;
+    margin: 0;
 }

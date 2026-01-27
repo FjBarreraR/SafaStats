@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{# Cambiamos el título dinámicamente basándonos en si la categoría tiene ID (existe en BD) #}
+{% block title %}{{ category.id ? 'Edit Category' : 'New Category' }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-5 mb-5">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <h2 class="mb-4 text-center">{{ category.id ? 'Edit Category: ' ~ category.name : 'Create New Category' }}</h2>
+
+                <form method="POST">
+                    <div class="card shadow-sm p-4 mb-4">
+                        <div class="mb-3">
+                            <label for="name" class="form-label fw-bold">Category Name</label>
+                            <input type="text" class="form-control" id="name" name="name"
+                                   value="{{ category.name|default('') }}"
+                                   placeholder="Ej: Gigantes de África..." required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="image" class="form-label fw-bold">Category Image URL</label>
+                            <input type="text" class="form-control" id="image" name="image"
+                                   value="{{ category.image|default('') }}"
+                                   placeholder="https://example.com/foto.jpg" required>
+                        </div>
+                    </div>
+
+                    <h4 class="mb-3">Select Dinosaurs for this Category</h4>
+                    <div class="table-responsive shadow-sm">
+                        <table class="table table-bordered table-hover bg-white align-middle">
+                            <thead class="table-dark">
+                            <tr>
+                                <th style="width: 50px;">Select</th>
+                                <th>Name</th>
+                                <th>Diet</th>
+                                <th>Period</th>
+                                <th>Region</th>
+                                <th>Type</th>
+                                <th>Dimensions (L/H/W)</th>
+                                <th>Existed</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for dino in dinosaurs %}
+                                <tr>
+                                    <td class="text-center">
+                                        <input type="checkbox" id="dino_{{ dino.id }}" name="items[]" value="{{ dino.id }}"
+                                               class="form-check-input"
+                                            {% if category.dinosaurs is defined and category.dinosaurs.contains(dino) %} checked {% endif %}>
+                                    </td>
+                                    <td class="fw-bold">{{ dino.name }}</td>
+                                    <td><span class="badge bg-info text-dark">{{ dino.diet }}</span></td>
+                                    <td>{{ dino.period }}</td>
+                                    <td>{{ dino.region }}</td>
+                                    <td>{{ dino.type }}</td>
+                                    <td>
+                                        <small>L: {{ dino.length }} | H: {{ dino.height }} | W: {{ dino.weight }}</small>
+                                    </td>
+                                    <td>{{ dino.existed }}</td>
+                                </tr>
+                            {% else %}
+                                <tr><td colspan="8" class="text-center">No hay dinosaurios registrados aún.</td></tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="container d-flex flex-column justify-content-start align-items-center mt-4 gap-2">
+                        <button type="submit" class="btn btn-success btn-lg px-5">
+                            {{ category.id ? 'Update Category' : 'Save Category' }}
+                        </button>
+                        <a href="{{ path('app_category_index') }}" class="btn btn-link text-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

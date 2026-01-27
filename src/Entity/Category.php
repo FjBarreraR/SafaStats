@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CategoryRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
@@ -25,11 +26,16 @@ class Category
     #[ORM\Column(length: 800)]
     private ?string $image = null;
 
-    #[JoinTable(name: 'category_dinosaur')]
+    #[ORM\ManyToMany(targetEntity: Dinosaurs::class)]
+    #[JoinTable(name: 'dinosaurs_project.category_dinosaur')]
     #[JoinColumn(name: 'id_category', referencedColumnName: 'id')]
     #[InverseJoinColumn(name: 'id_dinosaur', referencedColumnName: 'id')]
-    #[ORM\ManyToMany(targetEntity: Dinosaurs::class)]
-    private ?Collection $dinosaurs = null;
+    private ?Collection $dinosaurs;
+
+    public function __construct()
+    {
+        $this->dinosaurs = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -56,6 +62,32 @@ class Category
     public function setImage(string $image): static
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getDinosaurs(): ?Collection
+    {
+        return $this->dinosaurs;
+    }
+
+    public function setDinosaurs(?Collection $dinosaurs): void
+    {
+        $this->dinosaurs = $dinosaurs;
+    }
+
+    public function addDinosaur(Dinosaurs $dinosaur): static {
+        if (!$this->dinosaurs->contains($dinosaur)) {
+            $this->dinosaurs->add($dinosaur);
+        }
+
+        return $this;
+    }
+
+    public function removeDinosaur(Dinosaurs $dinosaur): static
+    {
+        // Esta es la parte que te falta:
+        $this->dinosaurs->removeElement($dinosaur);
 
         return $this;
     }

@@ -1,7 +1,87 @@
-<nav class="navbar">
-    <div class="d-flex justify-content-center align-items-center w-100">
-        <a class="navbar-brand" href="#">
-            <img src="{{ asset('images/got_reviews_logo.png') }}" alt="GotReviews" style="max-height:160px; width:auto;">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container-fluid">
+
+        {# BOTÓN VOLVER ATRÁS #}
+        <button
+            class="btn btn-outline-light me-3"
+            onclick="window.history.back();"
+            title="Volver atrás"
+            style="color: black"
+        >
+            ←
+        </button>
+
+        {# LOGO + NOMBRE APP #}
+        <a class="navbar-brand d-flex align-items-center" href="{{ path('app_home') }}">
+            <span class="me-2" style="font-size: 1.4rem;">🦖</span>
+            <strong>DinoReviews</strong>
         </a>
+
+        <div class="collapse navbar-collapse justify-content-end">
+
+            <ul class="navbar-nav align-items-center">
+
+                {# USUARIO LOGUEADO #}
+                {% if app.user %}
+                    <li class="nav-item dropdown">
+                        <a
+                            class="nav-link dropdown-toggle"
+                            href="#"
+                            id="userDropdown"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                            style="color: black"
+                        >
+                            👤 {{ app.user.userIdentifier }}
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <span class="dropdown-item-text text-muted small">
+                                    Sesión iniciada
+                                </span>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item" href="{{ path('app_logout') }}">
+                                    🚪 Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    {# USUARIO NO LOGUEADO #}
+                {% else %}
+                    <li class="nav-item dropdown">
+                        <a
+                            class="nav-link dropdown-toggle"
+                            href="#"
+                            id="guestDropdown"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                            style="color: black"
+                        >
+                            👤 Cuenta
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <a class="dropdown-item" href="{{ path('app_login') }}">
+                                    🔑 Login
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ path('app_register') }}">
+                                    📝 Register
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                {% endif %}
+
+            </ul>
+        </div>
     </div>
 </nav>
