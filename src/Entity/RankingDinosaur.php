@@ -25,9 +25,38 @@ class RankingDinosaur
     #[ORM\JoinColumn(name: 'id_ranking', nullable: false)]
     private ?Ranking $ranking = null;
 
-
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(?int $position): void
+    {
+        $this->position = $position;
+    }
+
+    public function getDinosaur(): ?Dinosaurs
+    {
+        return $this->dinosaur;
+    }
+
+    public function setDinosaur(?Dinosaurs $dinosaur): void
+    {
+        $this->dinosaur = $dinosaur;
+    }
+
+    public function getRanking(): ?Ranking
+    {
+        return $this->ranking;
+    }
+
+    public function setRanking(?Ranking $ranking): void
+    {
+        $this->ranking = $ranking;
     }
 }

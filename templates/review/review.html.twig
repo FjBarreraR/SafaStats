@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Comunidad de Paleontología{% endblock %}
+{% block title %}Reseñas{% endblock %}
 
 {% block body %}
     <div class="container mt-5">
         <div class="d-flex justify-content-between align-items-center mb-5 p-4 bg-dark text-white rounded-3 shadow">
             <div>
-                <h1 class="display-5 fw-bold mb-0">Exploración de Avistamientos</h1>
-                <p class="lead mb-0 text-info">Opiniones sobre especímenes del proyecto {{ dinosaurs|length }} registrados.</p>
+                <h1 class="display-5 fw-bold mb-0">Reseñas de dinosaurios</h1>
+                <p class="lead mb-0 text-info">Opiniones sobre especies del proyecto {{ dinosaurs|length }} registrados.</p>
             </div>
             <button class="btn btn-info btn-lg fw-bold" data-bs-toggle="collapse" data-bs-target="#formReview">
                 <i class="bi bi-journal-plus me-2"></i>Nueva Review
@@ -16,12 +16,12 @@
 
         <div class="collapse mb-5" id="formReview">
             <div class="card border-info shadow">
-                <div class="card-header bg-info text-dark fw-bold">Registrar nueva observación</div>
+                <div class="card-header bg-info text-dark fw-bold">Registrar nueva reseña</div>
                 <div class="card-body">
                     <form action="{{ path('app_review_submit_global') }}" method="POST">
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-bold">Seleccionar Espécimen</label>
+                                <label class="form-label fw-bold">Seleccionar Especie</label>
                                 <select name="dinosaur_id" class="form-select" required>
                                     <option value="" selected disabled>Elige un dinosaurio...</option>
                                     {% for dino in dinosaurs %}
@@ -32,7 +32,7 @@
                                 </select>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-bold">Puntuación de Peligrosidad/Interés</label>
+                                <label class="form-label fw-bold">Puntuación</label>
                                 <select name="rating" class="form-select">
                                     <option value="5">⭐⭐⭐⭐⭐ - Impresionante</option>
                                     <option value="4">⭐⭐⭐⭐ - Muy interesante</option>
@@ -43,18 +43,18 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label fw-bold">Observaciones del encuentro</label>
+                            <label class="form-label fw-bold">Comentario</label>
                             <textarea name="comment" class="form-control" rows="3" placeholder="Describe el comportamiento, tamaño o detalles..." required></textarea>
                         </div>
                         <div class="text-end">
-                            <button type="submit" class="btn btn-dark px-5">Publicar en el registro</button>
+                            <button type="submit" class="btn btn-dark px-5">Publicar</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
 
-        <h3 class="mb-4 border-bottom pb-2 text-secondary">Últimos Informes</h3>
+        <h3 class="mb-4 border-bottom pb-2 text-secondary">Últimas Reseñas</h3>
         <div class="row">
             {% for review in reviews %}
                 <div class="col-lg-4 col-md-6 mb-4">
@@ -95,7 +95,7 @@
                                 </div>
                                 <div class="ms-2">
                                     <p class="mb-0 small fw-bold text-dark">{{ review.user.email }}</p>
-                                    <p class="mb-0 x-small text-muted" style="font-size: 0.75rem;">Investigador acreditado</p>
+                                    <p class="mb-0 x-small text-muted" style="font-size: 0.75rem;">Usuario acreditado</p>
                                 </div>
                             </div>
                         </div>
@@ -103,7 +103,7 @@
                 </div>
             {% else %}
                 <div class="col-12 text-center py-5">
-                    <p class="text-muted fs-4">No hay informes de avistamientos todavía.</p>
+                    <p class="text-muted fs-4">No hay reseñas todavía</p>
                 </div>
             {% endfor %}
         </div>
