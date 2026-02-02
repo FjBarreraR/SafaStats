@@ -14,12 +14,14 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class categoryController extends AbstractController
 {
+    // Cargar página principal de categoría
     #[Route('/category', name: 'category_app')]
     public function main(): Response
     {
         return $this->render('category/categoriesMain.html.twig');
     }
 
+    // Cargar todas las categorías
     #[Route('/category/all', name: 'app_category_index')]
     public function seeCategories(CategoryRepository $categoryRepository): Response
     {
@@ -27,6 +29,8 @@ class categoryController extends AbstractController
             'categories' => $categoryRepository->findAll(),
         ]);
     }
+
+    // Guardar y editar categorías en base de datos junto a sus correspondientes dinosaurios
     #[Route('/category/create', name: 'app_category_new')]
     #[Route('/category/edit/{id}', name: 'app_category_edit', requirements: ['id' => '\d+'])]
     #[IsGranted('ROLE_ADMIN')]
@@ -36,7 +40,6 @@ class categoryController extends AbstractController
         DinosaursRepository $dinosaursRepository,
         EntityManagerInterface $entityManager
     ): Response {
-        // Si la ruta es 'create', $category será null, así que creamos una nueva
         if (!$category) {
             $category = new Category();
         }
@@ -48,17 +51,13 @@ class categoryController extends AbstractController
             ]);
         }
 
-        // Lógica POST (Guardar/Actualizar)
         $category->setName($request->request->get('name'));
         $category->setImage($request->request->get('image'));
 
-        // Sincronizar relación N:M (Dinosaurios)
-        // 1. Limpiamos los actuales para evitar duplicados o mantener los desmarcados
         foreach ($category->getDinosaurs() as $dino) {
             $category->removeDinosaur($dino);
         }
 
-        // 2. Añadimos los seleccionados
         $dinosaur_selected = $request->request->all('items');
         foreach ($dinosaur_selected as $idDinosaur) {
             $dinosaur = $dinosaursRepository->find($idDinosaur);
@@ -74,6 +73,7 @@ class categoryController extends AbstractController
         return $this->redirectToRoute('app_category_index');
     }
 
+    // Cargar cada categoría con sus datos
     #[Route('/category/{id}', name: 'app_category_show', requirements: ['id' => '\d+'])]
     public function show(Category $category): Response
     {
@@ -82,11 +82,11 @@ class categoryController extends AbstractController
         ]);
     }
 
+    // Eliminar una categoría con todos sus datos
     #[Route('/category/delete/{id}', name: 'app_category_delete', requirements: ['id' => '\d+'], methods: ['POST'])]
     #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, Category $category, EntityManagerInterface $entityManager): Response
     {
-        // Validación del token CSRF que pusimos en el template
         if ($this->isCsrfTokenValid('delete' . $category->getId(), $request->request->get('_token'))) {
             $entityManager->remove($category);
             $entityManager->flush();

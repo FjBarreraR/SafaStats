@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class UserController extends AbstractController
 {
+    // Cargar el formulario y mandar el formulario del registro del usuario
     #[Route('/register', name: 'app_register')]
     public function register(Request                     $request,
                              UserPasswordHasherInterface $passwordHasher,
@@ -45,6 +46,7 @@ class UserController extends AbstractController
         ]);
     }
 
+    // Cargar usuarios
     #[Route('/users', name: 'users_app')]
     public function index(UserRepository $userRepository): Response
     {

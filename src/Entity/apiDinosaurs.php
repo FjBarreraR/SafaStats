@@ -7,13 +7,16 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class apiDinosaurs
 {
+    // Atributos
     private HttpClientInterface $client;
 
+    // Constructor
     public function __construct(HttpClientInterface $client)
     {
         $this->client = $client;
     }
 
+    // Getter y Setter
     public function getAllDinosaurs(): array {
         $response = $this->client->request('GET', 'https://dinoapi.brunosouzadev.com/api/dinosaurs/');
 

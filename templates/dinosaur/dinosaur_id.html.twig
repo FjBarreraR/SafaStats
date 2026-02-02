@@ -5,15 +5,15 @@
 {% block body %}
     <div class="container mt-5 mb-5">
 
-        {# --- Botón Volver --- #}
+        <!-- Botón volver a la lista -->
         <div class="mb-4">
             <a href="{{ path('app_dinosaur') }}" class="text-decoration-none text-secondary">
                 &larr; Back to list
             </a>
         </div>
 
+        <!-- Mostrar todos los atributos del Dinosaurio seleccionado -->
         <div class="card shadow-lg border-0 overflow-hidden">
-            {# --- Header con Nombre y Popularidad --- #}
             <div class="card-header bg-dark text-white p-4 d-flex justify-content-between align-items-center">
                 <h1 class="h2 mb-0">{{ dinosaur.name }}</h1>
                 <div class="d-flex align-items-center gap-2">
@@ -30,7 +30,6 @@
 
             <div class="card-body p-0">
                 <div class="row g-0">
-                    {# --- Columna Izquierda: Imagen --- #}
                     <div class="col-md-5 bg-light d-flex align-items-center justify-content-center p-3">
                         <img src="{{ dinosaur.image|default('https://via.placeholder.com/400x400') }}"
                              class="img-fluid rounded shadow-sm"
@@ -38,7 +37,6 @@
                              style="max-height: 400px; width: 100%; object-fit: cover;">
                     </div>
 
-                    {# --- Columna Derecha: Información Principal --- #}
                     <div class="col-md-7 p-4 p-lg-5">
                         <h4 class="text-primary mb-3">Taxonomy & Location</h4>
 
@@ -73,7 +71,6 @@
                     </div>
                 </div>
 
-                {# --- Sección de Estadísticas Físicas (Weight, Height, Length) --- #}
                 <div class="bg-light p-4 border-top border-bottom">
                     <div class="row text-center">
                         <div class="col-md-4 mb-3 mb-md-0">
@@ -99,11 +96,9 @@
                     </div>
                 </div>
 
-                {# --- Sección de Descripción --- #}
                 <div class="p-4 p-lg-5">
                     <h4 class="text-primary mb-3">Description</h4>
                     <div class="text-muted lead" style="font-size: 1.1rem; line-height: 1.8;">
-                        {# Usamos nl2br para respetar los saltos de línea de la BDD #}
                         {{ dinosaur.description|nl2br }}
                     </div>
                 </div>

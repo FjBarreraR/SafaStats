@@ -23,6 +23,7 @@ class DinosaurController extends AbstractController
 //        ]);
 //    }
 
+    // Cargar toda la lista de dinosaurios
     #[Route('/dinosaur', name: 'app_dinosaur')]
     public function listDinosaurs(DinosaursRepository $repository): Response {
         $dinosaurs = $repository->findAll();
@@ -42,6 +43,7 @@ class DinosaurController extends AbstractController
 //        ]);
 //    }
 
+    // Cargar dinosaurio con todos sus datos
     #[Route('/dinosaur/{id}', name: 'app_dinosaur_show', methods: ['GET'])]
     public function show(Dinosaurs $dinosaur): Response
     {

@@ -15,6 +15,7 @@ use Doctrine\ORM\Mapping\InverseJoinColumn;
 
 class Category
 {
+    // Atributos
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -32,11 +33,13 @@ class Category
     #[InverseJoinColumn(name: 'id_dinosaur', referencedColumnName: 'id')]
     private ?Collection $dinosaurs;
 
+    // Constructor
     public function __construct()
     {
         $this->dinosaurs = new ArrayCollection();
     }
 
+    // Getter y Setter
     public function getId(): ?int
     {
         return $this->id;

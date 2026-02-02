@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class HomeController extends AbstractController
 {
+    // Cargar página principal
     #[Route('/', name: 'app_home')]
     public function index(): Response {
         return $this->render('home/home.html.twig', [

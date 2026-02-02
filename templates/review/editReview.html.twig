@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar Reseña{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+
+        {# Encabezado #}
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="d-flex align-items-center mb-4">
+                    <!-- Botón volver -->
+                    <a href="{{ path('app_reviews_latest') }}" class="btn btn-outline-dark me-3">← Volver</a>
+                    <!-- Título -->
+                    <h2 class="fw-bold mb-0">Editando reseña</h2>
+                </div>
+
+
+                <div class="card shadow-lg border-0">
+
+                    <!-- Mostrar Reseñas -->
+                    <div class="card-header bg-dark text-white p-4 d-flex align-items-center">
+                        <img src="{{ review.dinosaur.image }}" alt="{{ review.dinosaur.name }}"
+                             class="rounded-circle border border-2 border-white me-3"
+                             style="width: 60px; height: 60px; object-fit: cover;">
+                        <div>
+                            <h5 class="mb-0 text-info">{{ review.dinosaur.name }}</h5>
+                            <small class="text-white-50">Editando opinión sobre {{ review.dinosaur.type }}</small>
+                        </div>
+                    </div>
+
+                    <div class="card-body p-4">
+                        <form action="{{ path('app_review_edit', {'id': review.id}) }}" method="POST">
+
+                            <div class="mb-4">
+                                <label class="form-label fw-bold">Tu Puntuación</label>
+                                <select name="rating" class="form-select form-select-lg" required>
+                                    <option value="5" {{ review.rating == 5 ? 'selected' : '' }}>⭐⭐⭐⭐⭐ - Impresionante</option>
+                                    <option value="4" {{ review.rating == 4 ? 'selected' : '' }}>⭐⭐⭐⭐ - Muy interesante</option>
+                                    <option value="3" {{ review.rating == 3 ? 'selected' : '' }}>⭐⭐⭐ - Estándar</option>
+                                    <option value="2" {{ review.rating == 2 ? 'selected' : '' }}>⭐⭐ - Poco relevante</option>
+                                    <option value="1" {{ review.rating == 1 ? 'selected' : '' }}>⭐ - Decepcionante</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label fw-bold">Tu Comentario</label>
+                                <textarea name="comment" class="form-control" rows="5" required>{{ review.comment }}</textarea>
+                                <div class="form-text">Modifica tu texto original arriba.</div>
+                            </div>
+
+                            <!-- Botones -->
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <a href="{{ path('app_reviews_latest') }}" class="btn btn-light me-md-2">Cancelar</a>
+                                <button type="submit" class="btn btn-info fw-bold text-dark px-5">
+                                    <i class="bi bi-save me-2"></i> Guardar Cambios
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

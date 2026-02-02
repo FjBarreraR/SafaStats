@@ -7,10 +7,13 @@
     <div class="container mt-5 mb-5">
         <div class="row justify-content-center">
             <div class="col-md-12">
+                <!-- Título -->
                 <h2 class="mb-4 text-center">{{ category.id ? 'Edit Category: ' ~ category.name : 'Create New Category' }}</h2>
 
+                <!-- Formualario POST -->
                 <form method="POST">
                     <div class="card shadow-sm p-4 mb-4">
+                        <!-- Nombre de la Categoría -->
                         <div class="mb-3">
                             <label for="name" class="form-label fw-bold">Category Name</label>
                             <input type="text" class="form-control" id="name" name="name"
@@ -18,6 +21,7 @@
                                    placeholder="Ej: Gigantes de África..." required>
                         </div>
 
+                        <!-- Imagen de la Categoría -->
                         <div class="mb-3">
                             <label for="image" class="form-label fw-bold">Category Image URL</label>
                             <input type="text" class="form-control" id="image" name="image"
@@ -26,6 +30,7 @@
                         </div>
                     </div>
 
+                    <!-- Lista de los dinosaurios para elegir en la categoría que se va a crear -->
                     <h4 class="mb-3">Select Dinosaurs for this Category</h4>
                     <div class="table-responsive shadow-sm">
                         <table class="table table-bordered table-hover bg-white align-middle">
@@ -66,6 +71,7 @@
                         </table>
                     </div>
 
+                    <!-- Botones -->
                     <div class="container d-flex flex-column justify-content-start align-items-center mt-4 gap-2">
                         <button type="submit" class="btn btn-success btn-lg px-5">
                             {{ category.id ? 'Update Category' : 'Save Category' }}

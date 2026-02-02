@@ -23,6 +23,16 @@
 
                 {# USUARIO LOGUEADO #}
                 {% if app.user %}
+
+                    {# --- NUEVO BOTÓN PERSONAL RANKING --- #}
+                    <li class="nav-item me-3">
+                        {# Asegúrate de cambiar 'app_personal_ranking' por el nombre real de tu ruta #}
+                        <a class="nav-link" href="#" style="color: white">
+                            🏆 Personal Ranking
+                        </a>
+                    </li>
+                    {# ------------------------------------ #}
+
                     <li class="nav-item dropdown">
                         <a
                             class="nav-link dropdown-toggle"
@@ -45,7 +55,7 @@
                             <li><hr class="dropdown-divider"></li>
                             <li>
                                 <a class="dropdown-item" href="{{ path('app_logout') }}">
-                                    🚪 Logout
+                                    Logout
                                 </a>
                             </li>
                         </ul>

@@ -5,16 +5,22 @@
 {% block body %}
     <div class="container mt-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2>Dinosaur Database</h2>
+            <!-- Título -->
+            <h2>Dinosaurs</h2>
+
+            <!-- Opción crear un nuevo Dinosaurio solo si es Admin -->
             {% if is_granted('ROLE_ADMIN') %}
                 <a href="#" class="btn bg-green text-black">Create New Dino</a>
             {% endif %}
         </div>
 
+        <!-- Tabla -->
         <div class="card shadow-sm">
             <div class="card-body">
                 <table class="table table-striped table-hover align-middle">
                     <thead class="table-dark">
+
+                    <!-- Atributos de los Dinosaurios -->
                     <tr>
                         <th>Image</th>
                         <th>Name</th>
@@ -26,9 +32,9 @@
                     </tr>
                     </thead>
                     <tbody>
+                    <!-- Cargar todos los Dinosaurios -->
                     {% for dinosaur in dinosaurs %}
                         <tr>
-                            {# 1. Imagen: Mapeado a 'image' #}
                             <td>
                                 <img src="{{ dinosaur.image|default('https://via.placeholder.com/50') }}"
                                      class="rounded-circle"
@@ -37,7 +43,6 @@
                                      width="50" height="50">
                             </td>
 
-                            {# 2. Nombre: Mapeado a 'name' + Icono si es Popular #}
                             <td class="fw-bold">
                                 {{ dinosaur.name }}
                                 {% if dinosaur.isPopular %}
@@ -45,21 +50,16 @@
                                 {% endif %}
                             </td>
 
-                            {# 3. Tipo: Mapeado a 'type' #}
                             <td>{{ dinosaur.type }}</td>
 
-                            {# 4. Dieta: Mapeado a 'diet' #}
                             <td>
-                                {# Lógica visual opcional para la dieta #}
                                 <span class="badge {% if 'carnivore' in dinosaur.diet|lower %}bg-danger{% elseif 'herbivore' in dinosaur.diet|lower %}bg-success{% else %}bg-secondary{% endif %}">
                                     {{ dinosaur.diet }}
                                 </span>
                             </td>
 
-                            {# 5. Periodo: Mapeado a 'period' #}
                             <td>{{ dinosaur.period }}</td>
 
-                            {# 6. Región: Mapeado a 'region' #}
                             <td><small class="text-muted">{{ dinosaur.region }}</small></td>
 
                             <td>
@@ -70,6 +70,7 @@
                             </td>
                         </tr>
                     {% else %}
+                        <!-- Texto por si no hay ningun Dinosaurio -->
                         <tr>
                             <td colspan="7" class="text-center py-4">No dinosaurs found.</td>
                         </tr>

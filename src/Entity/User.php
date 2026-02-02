@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Table(name: 'user', schema: 'dinosaurs_project')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    // Atributos
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(name: 'id')]
@@ -25,6 +26,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $role = [];
 
+    // Getter y Setter
     public function getId(): ?int
     {
         return $this->id;

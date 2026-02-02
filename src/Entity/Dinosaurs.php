@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: 'dinosaur', schema: 'dinosaurs_project')]
 class Dinosaurs
 {
+    // Atributos
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(name: 'id')]
@@ -57,6 +58,7 @@ class Dinosaurs
     #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'dinosaurs')]
     private ?Collection $categories;
 
+    // Getter y Setter
     public function getId(): ?int
     {
         return $this->id;

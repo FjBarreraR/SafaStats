@@ -15,57 +15,84 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ReviewController extends AbstractController
 {
+    // Cargar página principal
     #[Route('/reviews/latest', name: 'app_reviews_latest', methods: ['GET'])]
     public function index(ReviewRepository $reviewRepo, DinosaursRepository $dinoRepo): Response
     {
+        $user = $this->getUser();
+        $reviewedDinoIds = [];
+
+        if ($user) {
+            $userReviews = $reviewRepo->findBy(['user' => $user]);
+            foreach ($userReviews as $review) {
+                // Guardamos solo los IDs de los dinos
+                $reviewedDinoIds[] = $review->getDinosaur()->getId();
+            }
+        }
+
         return $this->render('review/review.html.twig', [
-            // Traemos las reviews más recientes primero
             'reviews' => $reviewRepo->findBy([], ['id' => 'DESC']),
-            // Pasamos todos los dinosaurios para el <select> del formulario
             'dinosaurs' => $dinoRepo->findAll(),
+            // 2. Pasamos la lista a la vista
+            'reviewed_ids' => $reviewedDinoIds,
         ]);
     }
 
-    /**
-     * Esta ruta procesa el envío del formulario manual.
-     */
+    // Guardar una review
     #[Route('/reviews/submit', name: 'app_review_submit_global', methods: ['POST'])]
     #[IsGranted('ROLE_USER')]
     public function submit(
         Request $request,
         EntityManagerInterface $entityManager,
-        DinosaursRepository $dinoRepo
+        DinosaursRepository $dinoRepo,
+        ReviewRepository $reviewRepo // Inyectamos el repo de reviews
     ): Response {
-        // 1. Obtener datos del formulario manual (atributo 'name' de los inputs)
         $dinoId = $request->request->get('dinosaur_id');
         $rating = $request->request->get('rating');
         $comment = $request->request->get('comment');
+        $user = $this->getUser();
 
-        // 2. Buscar la entidad Dinosaurio por el ID seleccionado
         $dinosaur = $dinoRepo->find($dinoId);
 
-        // 3. Validación rápida
         if (!$dinosaur || !$comment || !$rating) {
             $this->addFlash('danger', 'Error: Asegúrate de elegir un dinosaurio y escribir un comentario.');
             return $this->redirectToRoute('app_reviews_latest');
         }
 
-        // 4. Crear la entidad Review y mapear los campos
+        $existingReview = $reviewRepo->findOneBy([
+            'user' => $user,
+            'dinosaur' => $dinosaur
+        ]);
+
+        if ($existingReview) {
+            $this->addFlash('warning', '¡Ya has valorado al ' . $dinosaur->getName() . '! Puedes editar tu reseña existente.');
+            return $this->redirectToRoute('app_reviews_latest');
+        }
+
         $review = new Review();
         $review->setComment($comment);
         $review->setRating((int)$rating);
         $review->setDinosaur($dinosaur);
+        $review->setUser($user);
 
-        // Asignar el usuario actual (tu entidad requiere un User)
-        $review->setUser($this->getUser());
-
-        // 5. Guardar en la base de datos
         $entityManager->persist($review);
         $entityManager->flush();
 
         $this->addFlash('success', '¡Tu review sobre el ' . $dinosaur->getName() . ' ha sido publicada!');
 
-        // 6. Redirigir de vuelta al listado
         return $this->redirectToRoute('app_reviews_latest');
+    }
+
+    // Editar una review
+    #[Route('/review/edit/{id}', name: 'app_review_edit')]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    public function edit(Review $review, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        if ($review->getUser() !== $this->getUser()) {
+            // ...
+            return $this->redirectToRoute('app_reviews_latest');
+        }
+
+        return $this->render('review/editReview.html.twig', [ 'review' => $review ]);
     }
 }

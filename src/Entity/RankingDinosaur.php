@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: 'ranking_dinosaur', schema: 'dinosaurs_project')]
 class RankingDinosaur
 {
+    // Atributos
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(name: 'id')]
@@ -25,6 +26,7 @@ class RankingDinosaur
     #[ORM\JoinColumn(name: 'id_ranking', nullable: false)]
     private ?Ranking $ranking = null;
 
+    // Getter y Setter
     public function getId(): ?int
     {
         return $this->id;

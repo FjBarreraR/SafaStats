@@ -5,9 +5,12 @@
 {% block body %}
     <div class="container d-flex flex-column justify-content-start align-items-center vh-100 pt-5">
 
+        <!-- Título -->
         <h1 class="mb-5 text-dark fw-bold">Bienvenido a Jurassic Stats</h1>
 
+        <!-- Tarjetas de Arriba -->
         <div class="row g-4 justify-content-center w-100">
+            <!-- Primera Tarjeta -->
             <div class="col-10 col-md-4">
                 <a href="{{ path('top_rated_dinos_app') }}" class="text-decoration-none"> {# Pon aquí tu ruta de rankings #}
                     <div class="card text-center text-white bg-dark-blue card-hover h-100">
@@ -18,6 +21,8 @@
                     </div>
                 </a>
             </div>
+
+            <!-- Segunda Tarjeta -->
             <div class="col-10 col-md-4">
                 <a href="{{ path('app_reviews_latest') }}" class="text-decoration-none">
                     <div class="card text-center text-white bg-green card-hover h-100">
@@ -32,7 +37,9 @@
 
         <br><br>
 
+        <!-- Tarjetas de abajo -->
         <div class="row g-4 justify-content-center w-100">
+            <!-- Tercera Tarjeta solo se muestra si el usuario tiene el rol de ADMIN-->
             {% if is_granted('ROLE_ADMIN') %}
                 <div class="col-10 col-md-4">
                     <a href="{{ path('admin') }}" class="text-decoration-none text-white">
@@ -46,6 +53,7 @@
                 </div>
             {% endif %}
 
+            <!-- Cuarta Tarjeta -->
             <div class="col-10 col-md-4">
                 <div class="card text-center text-white bg-blue card-hover h-100">
                     <div class="card-body py-5">

@@ -5,8 +5,10 @@
 {% block body %}
     <div class="container d-flex flex-column justify-content-start align-items-center vh-100 pt-5">
 
+        <!-- Título -->
         <h2 class="mb-4">Panel de Control</h2>
 
+        <!-- Primera Tarjeta -->
         <div class="row g-4 justify-content-center w-100">
             <div class="col-md-3">
                 <a href="#" class="text-decoration-none text-white">
@@ -19,6 +21,7 @@
                 </a>
             </div>
 
+            <!-- Segunda Tarjeta -->
             <div class="col-md-3">
                 <a href="{{ path('category_app') }}" class="text-decoration-none text-white">
                     <div class="card text-center text-white bg-yellow card-hover h-100">
@@ -30,6 +33,7 @@
                 </a>
             </div>
 
+            <!-- Tercera Tarjeta -->
             <div class="col-md-3">
                 <a href="{{ path('app_dinosaur') }}" class="text-decoration-none text-white">
                     <div class="card text-center text-white bg-blue card-hover h-100">
@@ -41,6 +45,7 @@
                 </a>
             </div>
 
+            <!-- Cuarta Tarjeta -->
             <div class="col-md-3">
                 <a href="{{ path('users_app') }}" class="text-decoration-none text-white">
                     <div class="card text-center text-white bg-green card-hover h-100">
@@ -53,6 +58,7 @@
             </div>
         </div>
 
+        <!-- Volver al Home -->
         <div class="mt-5">
             <a href="{{ path('app_home') }}" class="btn btn-outline-dark">Volver al Home</a>
         </div>

@@ -12,11 +12,14 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class AdminController extends AbstractController
 {
+    // Cargar página principal de admin
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
         return $this->render('admin/admin.html.twig');
     }
+
+    // Cargar datos a la base de datos desde la api
     #[Route('/admin/dinosaur/load', name: 'app_admin')]
     public function loadData(HttpClientInterface $httpClient, EntityManagerInterface $entityManager): Response
     {
