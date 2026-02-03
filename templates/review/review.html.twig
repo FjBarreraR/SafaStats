@@ -6,9 +6,12 @@
     <div class="container mt-5">
         <div class="d-flex justify-content-between align-items-center mb-5 p-4 bg-dark text-white rounded-3 shadow">
             <div>
+                <!-- Título -->
                 <h1 class="display-5 fw-bold mb-0">Reseñas de dinosaurios</h1>
+                <!-- Párrafo -->
                 <p class="lead mb-0 text-info">Opiniones sobre especies del proyecto {{ dinosaurs|length }} registrados.</p>
             </div>
+            <!-- Botón nueva Review -->
             <button class="btn btn-info btn-lg fw-bold" data-bs-toggle="collapse" data-bs-target="#formReview">
                 <i class="bi bi-journal-plus me-2"></i>Nueva Review
             </button>
@@ -16,8 +19,10 @@
 
         <div class="collapse mb-5" id="formReview">
             <div class="card border-info shadow">
+                <!-- Título de registro de nueva reseña -->
                 <div class="card-header bg-info text-dark fw-bold">Registrar nueva reseña</div>
                 <div class="card-body">
+                    <!-- Principio del formulario -->
                     <form action="{{ path('app_review_submit_global') }}" method="POST">
                         <div class="row">
                             <div class="col-md-6 mb-3">
@@ -25,12 +30,10 @@
                                 <select name="dinosaur_id" class="form-select" required>
                                     <option value="" selected disabled>Elige un dinosaurio...</option>
 
+                                    <!-- Mostrmos todos los dinosaurios -->
                                     {% for dino in dinosaurs %}
-                                        {# Comprobamos si el ID está en la lista de reseñas del usuario #}
-                                        {# Usamos 'default([])' por si el usuario no está logueado y la variable es null #}
                                         {% set isReviewed = dino.id in reviewed_ids|default([]) %}
 
-                                        {# Si ya está reseñado, añadimos 'disabled' y cambiamos el texto #}
                                         <option value="{{ dino.id }}" {{ isReviewed ? 'disabled' : '' }} style="{{ isReviewed ? 'color: gray;' : '' }}">
                                             {{ dino.name }} ({{ dino.type }})
                                             {{ isReviewed ? '✅ (Ya opinaste)' : '- ' ~ dino.diet }}
@@ -44,6 +47,7 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-bold">Puntuación</label>
+                                <!-- Seleccionar puntuación -->
                                 <select name="rating" class="form-select">
                                     <option value="5">⭐⭐⭐⭐⭐ - Impresionante</option>
                                     <option value="4">⭐⭐⭐⭐ - Muy interesante</option>
@@ -54,9 +58,11 @@
                             </div>
                         </div>
                         <div class="mb-3">
+                            <!-- Dejar comentario -->
                             <label class="form-label fw-bold">Comentario</label>
                             <textarea name="comment" class="form-control" rows="3" placeholder="Describe el comportamiento, tamaño o detalles..." required></textarea>
                         </div>
+                        <!-- Botón de publicar -->
                         <div class="text-end">
                             <button type="submit" class="btn btn-dark px-5">Publicar</button>
                         </div>
@@ -65,8 +71,10 @@
             </div>
         </div>
 
+        <!-- Títuño -->
         <h3 class="mb-4 border-bottom pb-2 text-secondary">Últimas Reseñas</h3>
         <div class="row">
+            <!-- Cargar todas las reseñas -->
             {% for review in reviews %}
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card h-100 shadow-sm border-0 overflow-hidden">
@@ -99,11 +107,9 @@
                             </p>
                         </div>
 
-                        {# --- ZONA MODIFICADA: FOOTER DE LA TARJETA --- #}
                         <div class="card-footer bg-white border-top-0 pb-3">
                             <div class="d-flex justify-content-between align-items-center">
 
-                                {# INFO DEL AUTOR #}
                                 <div class="d-flex align-items-center">
                                     <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 35px; height: 35px;">
                                         {{ review.user.email|first|upper }}
@@ -114,10 +120,9 @@
                                     </div>
                                 </div>
 
-                                {# BOTONES DE ACCIÓN (SOLO SI ES EL DUEÑO) #}
+                                <!-- Mostrar el botón de editar si el usuario logueado es el dueño de esa review -->
                                 {% if app.user and review.user and app.user.id == review.user.id %}
                                     <div class="ms-2">
-                                        {# Asegúrate de tener creada la ruta 'app_review_edit' en tu controlador #}
                                         <a href="{{ path('app_review_edit', {'id': review.id}) }}" class="btn btn-sm btn-outline-secondary" title="Editar reseña">
                                             <i class="bi bi-pencil-square"></i> Editar
                                         </a>
@@ -126,10 +131,10 @@
 
                             </div>
                         </div>
-                        {# --------------------------------------------- #}
-
                     </div>
                 </div>
+
+            <!-- Alternativo si no hay ninguna reseña en la base de datos -->
             {% else %}
                 <div class="col-12 text-center py-5">
                     <p class="text-muted fs-4">No hay reseñas todavía</p>

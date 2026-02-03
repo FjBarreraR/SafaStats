@@ -8,23 +8,22 @@
     <div class="min-h-screen bg-stone-50 py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-7xl mx-auto">
 
-            {# Cabecera Dinámica #}
             <div class="mb-12 border-l-8 border-emerald-600 pl-6">
+                <!-- Título -->
                 <h1 class="text-4xl font-black text-stone-900 uppercase tracking-tight">
                     Categorías Registradas
                 </h1>
+                <!-- Aclaración -->
                 <p class="text-stone-500 mt-2 text-lg">
                     Gestión y valoración de los {{ categories|length }} grupos de categorías disponibles.
                 </p>
             </div>
 
-            {# Grid de Tarjetas #}
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Mostrar todas las Categorías -->
                 {% for category in categories %}
                     <div class="group bg-white rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-500 border border-stone-200 flex flex-col overflow-hidden">
 
-                        {# Imagen representativa de la categoría #}
-                        {# Tomamos la imagen del primer dinosaurio de la colección de la categoría #}
                         {% set sampleDino = category.dinosaurs|first %}
 
                         <div class="relative h-56 w-full bg-stone-200 overflow-hidden">
@@ -40,7 +39,6 @@
                                 </div>
                             {% endif %}
 
-                            {# Badge de conteo real #}
                             <div class="absolute top-4 right-4 bg-black/50 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-bold">
                                 {{ category.dinosaurs|length }} Especies
                             </div>
@@ -51,12 +49,7 @@
                                 {{ category.name }}
                             </h2>
 
-                            {# Descripción dinámica de la categoría #}
-                            <p class="text-stone-500 text-sm line-clamp-3 mb-6 flex-grow">
-                                {{ category.description|default('No hay descripción disponible para esta categoría.') }}
-                            </p>
-
-                            {# Atributos técnicos extraídos de la entidad Dinosaurs #}
+                            <!-- Atributos extraídos de la entidad Dinosaurios -->
                             {% if sampleDino %}
                                 <div class="flex flex-wrap gap-2 mb-6">
                                 <span class="bg-stone-100 text-stone-600 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider border border-stone-200">
@@ -71,7 +64,7 @@
                                 </div>
                             {% endif %}
 
-                            {# Botón de acción #}
+                            <!-- Botón valorar -->
                             <div class="mt-auto">
                                 <a href="{{ path('top_rated_dinos_rate_app', {'id': category.id}) }}"
                                    class="flex items-center justify-center w-full px-6 py-3 bg-emerald-600 hover:bg-stone-900 text-white font-bold rounded-xl transition-colors duration-300 shadow-lg shadow-emerald-200 hover:shadow-stone-300">
@@ -83,6 +76,7 @@
                             </div>
                         </div>
                     </div>
+                <!-- Párrafo alternativo por si no hay Categorías disponibles en la base de datos -->
                 {% else %}
                     <div class="col-span-full bg-white p-12 rounded-3xl border-2 border-dashed border-stone-300 text-center">
                         <p class="text-stone-400 text-xl font-medium">No hay categorías disponibles en la base de datos.</p>

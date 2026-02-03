@@ -6,16 +6,18 @@
     <div class="min-h-screen bg-stone-50 py-12 px-4">
         <div class="max-w-5xl mx-auto">
 
-            {# Cabecera con info de la categoría #}
             <div class="flex items-center justify-between mb-12 bg-white p-8 rounded-3xl shadow-sm border border-stone-200">
                 <div>
+                    <!-- Título -->
                     <h1 class="text-4xl font-black text-stone-900 tracking-tighter uppercase italic">
                         {{ category.name }} <span class="text-emerald-600">Top Tier</span>
                     </h1>
+                    <!-- Párrafo de aclaración -->
                     <p class="text-stone-500 font-mono text-xs mt-1">
                         Cálculo proporcional sobre {{ rankingEntries|length }} especímenes detectados
                     </p>
                 </div>
+                <!-- Aclaración sobre los puntos -->
                 <div class="text-right">
                     <span class="block text-3xl font-black text-stone-800">{{ rankingEntries|first.points }}</span>
                     <span class="text-[10px] text-stone-400 uppercase font-bold tracking-widest">Max Score</span>
@@ -23,19 +25,18 @@
             </div>
 
             <div class="grid grid-cols-1 gap-4">
+                <!-- Recorrer todos los dinosaurios ya ordenados según los puntos de la Categoría -->
                 {% for entry in rankingEntries %}
                     {% set dino = entry.dinosaur %}
 
                     <div class="group bg-white rounded-2xl p-4 shadow-sm hover:shadow-xl transition-all duration-300 border border-stone-100 flex items-center relative overflow-hidden">
 
-                        {# Indicador de Posición Lateral #}
                         <div class="w-12 flex-shrink-0 text-center">
                             <span class="text-2xl font-black {% if loop.index <= 3 %}text-emerald-500{% else %}text-stone-300{% endif %}">
                                 {{ entry.position }}
                             </span>
                         </div>
 
-                        {# Imagen #}
                         <div class="relative h-20 w-20 flex-shrink-0 mx-4">
                             <img src="{{ dino.image }}" alt="{{ dino.name }}" class="h-full w-full object-cover rounded-xl shadow-md group-hover:scale-105 transition-transform">
                             {% if loop.index == 1 %}
@@ -43,7 +44,6 @@
                             {% endif %}
                         </div>
 
-                        {# Info del Dinosaurio #}
                         <div class="flex-grow">
                             <h3 class="text-xl font-bold text-stone-800">{{ dino.name }}</h3>
                             <div class="flex gap-2 mt-1">
@@ -52,21 +52,18 @@
                             </div>
                         </div>
 
-                        {# Sistema de Puntos y Barra #}
                         <div class="flex flex-col items-end w-48">
                             <div class="flex items-baseline gap-1">
                                 <span class="text-2xl font-black text-stone-900">{{ entry.points }}</span>
                                 <span class="text-[10px] text-stone-400 font-bold">PTS</span>
                             </div>
 
-                            {# Barra visual proporcional #}
                             <div class="w-full h-1.5 bg-stone-100 rounded-full mt-2 overflow-hidden">
                                 <div class="h-full bg-emerald-500 rounded-full transition-all duration-1000"
                                      style="width: {{ entry.points }}%"></div>
                             </div>
                         </div>
 
-                        {# Decoración de fondo con el 'Type' #}
                         <div class="absolute right-0 top-0 opacity-[0.03] text-6xl font-black italic -rotate-12 pointer-events-none uppercase">
                             {{ dino.type }}
                         </div>
@@ -74,6 +71,7 @@
                 {% endfor %}
             </div>
 
+            <!-- Botón para volver a la pantalla anterior de todas las Categorías -->
             <div class="mt-8 text-center">
                 <a href="{{ path('show_categories_top_rated_dinos_top_app') }}" class="text-stone-400 hover:text-emerald-600 font-bold text-sm transition-colors uppercase tracking-widest">
                     ← Volver a categorías

@@ -32,6 +32,7 @@
                     <div class="card-body p-4">
                         <form action="{{ path('app_review_edit', {'id': review.id}) }}" method="POST">
 
+                            <!-- Puntuación -->
                             <div class="mb-4">
                                 <label class="form-label fw-bold">Tu Puntuación</label>
                                 <select name="rating" class="form-select form-select-lg" required>
@@ -43,6 +44,7 @@
                                 </select>
                             </div>
 
+                            <!-- Parte del comentario -->
                             <div class="mb-4">
                                 <label class="form-label fw-bold">Tu Comentario</label>
                                 <textarea name="comment" class="form-control" rows="5" required>{{ review.comment }}</textarea>

@@ -89,10 +89,28 @@ class ReviewController extends AbstractController
     public function edit(Review $review, Request $request, EntityManagerInterface $entityManager): Response
     {
         if ($review->getUser() !== $this->getUser()) {
-            // ...
+            $this->addFlash('error', 'No tienes permiso para editar esta reseña.');
             return $this->redirectToRoute('app_reviews_latest');
         }
 
-        return $this->render('review/editReview.html.twig', [ 'review' => $review ]);
+        if ($request->isMethod('POST')) {
+            $rating = $request->request->get('rating');
+            $comment = $request->request->get('comment');
+
+            if ($rating && $comment) {
+                $review->setRating((int)$rating);
+                $review->setComment($comment);
+
+                $entityManager->flush();
+
+                $this->addFlash('success', '¡Tu reseña ha sido actualizada!');
+
+                return $this->redirectToRoute('app_reviews_latest');
+            }
+        }
+
+        return $this->render('review/editReview.html.twig', [
+            'review' => $review,
+        ]);
     }
 }

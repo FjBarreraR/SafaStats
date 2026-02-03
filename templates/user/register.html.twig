@@ -6,14 +6,16 @@
     <div class="container d-flex flex-column justify-content-center align-items-center vh-100">
         <div class="card shadow p-5" style="width: 100%; max-width: 450px;">
 
+            <!-- Título -->
             <h2 class="h3 mb-3 font-weight-normal text-center">Crear Cuenta</h2>
 
-            {# 1. Formulario HTML estándar apuntando a la misma ruta #}
+            <!-- Formulario de registro -->
             <form method="post" action="{{ path('app_register') }}">
+
+                <!-- Email -->
 
                 <div class="mb-3">
                     <label for="inputEmail" class="form-label">Tu Email</label>
-                    {# 2. El 'name' debe coincidir con $request->request->get('email') #}
                     <input type="email"
                            name="email"
                            id="inputEmail"
@@ -22,9 +24,9 @@
                            autofocus>
                 </div>
 
+                <!-- Contraseña -->
                 <div class="mb-3">
                     <label for="inputPassword" class="form-label">Tu Contraseña</label>
-                    {# 3. El 'name' debe coincidir con $request->request->get('password') #}
                     <input type="password"
                            name="password"
                            id="inputPassword"
@@ -32,9 +34,11 @@
                            required>
                 </div>
 
+                <!-- Botón de Registrarse -->
                 <button type="submit" class="btn bg-yellow w-100 btn-lg">Registrarse</button>
             </form>
 
+            <!-- Botón para redirigirte al Login por si ya tienes una cuenta y tienes que iniciar sesión -->
             <div class="text-center mt-3">
                 <a href="{{ path('app_login') }}" class="text-decoration-none text-muted">¿Ya tienes cuenta? Inicia sesión</a>
             </div>

@@ -6,10 +6,12 @@
     <div class="container d-flex flex-column justify-content-center align-items-center vh-100">
         <div class="card shadow p-5" style="width: 100%; max-width: 450px;">
 
+            <!-- Título -->
             <div class="text-center mb-4">
                 <h1 class="h3 mb-3 font-weight-normal">Acceso DinoRanking</h1>
             </div>
 
+            <!-- Formulario de Login -->
             <form method="post">
                 {% if error %}
                     <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -31,6 +33,7 @@
                     Entrar
                 </button>
 
+                <!-- Botón de registrarse por si el usuario se quiere crear una cuenta nueva -->
                 <div class="text-center mt-3">
                     <a href="{{ path('app_register') }}" class="text-decoration-none">¿No tienes cuenta? Regístrate</a>
                 </div>

@@ -8,20 +8,20 @@
     <div class="min-h-screen bg-stone-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-4xl w-full">
 
-            {# Cabecera #}
             <div class="text-center mb-12">
+                <!-- Título -->
                 <h1 class="text-4xl font-extrabold text-stone-900 tracking-tight sm:text-5xl">
                     🦖 DinoRanking
                 </h1>
+                <!-- Párrafo -->
                 <p class="mt-4 text-lg text-stone-600 font-medium">
                     ¿Qué deseas valorar o ver hoy?
                 </p>
             </div>
 
-            {# Contenedor de Tarjetas #}
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-                {# Tarjeta 1: Ver Ranking #}
+                <!-- Primera tarjeta: Ver las Categorías y ver su Ranking global -->
                 <a href="{{ path('show_categories_top_rated_dinos_top_app') }}" class="group relative bg-white rounded-3xl shadow-xl overflow-hidden transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl border border-stone-200">
                     <div class="absolute top-0 left-0 w-2 h-full bg-emerald-500"></div>
                     <div class="p-8">
@@ -43,7 +43,7 @@
                     </div>
                 </a>
 
-                {# Tarjeta 2: Valorar Ranking #}
+                <!-- Segunda tarjeta: Valorar un Ranking de una Categoría a elección de usuario -->
                 <a href="{{ path('show_categories_top_rated_dinos_app') }}" class="group relative bg-white rounded-3xl shadow-xl overflow-hidden transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl border border-stone-200">
                     <div class="absolute top-0 left-0 w-2 h-full bg-amber-500"></div>
                     <div class="p-8">
