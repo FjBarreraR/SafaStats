@@ -16,7 +16,7 @@ class RankingRepository extends ServiceEntityRepository
         parent::__construct($registry, Ranking::class);
     }
 
-//    /**
+    //    /**
 //     * @return Ranking[] Returns an array of Ranking objects
 //     */
 //    public function findByExampleField($value): array
@@ -31,7 +31,7 @@ class RankingRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Ranking
+    //    public function findOneBySomeField($value): ?Ranking
 //    {
 //        return $this->createQueryBuilder('r')
 //            ->andWhere('r.exampleField = :val')
@@ -40,4 +40,20 @@ class RankingRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function getRankingCountsByCategory(): array
+    {
+        $results = $this->createQueryBuilder('r')
+            ->select('c.id as categoryId, COUNT(r.id) as rankingCount')
+            ->join('r.category', 'c')
+            ->groupBy('c.id')
+            ->getQuery()
+            ->getResult();
+
+        $counts = [];
+        foreach ($results as $result) {
+            $counts[$result['categoryId']] = $result['rankingCount'];
+        }
+
+        return $counts;
+    }
 }

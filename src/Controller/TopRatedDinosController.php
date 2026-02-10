@@ -8,6 +8,7 @@ use App\Entity\Ranking;
 use App\Entity\RankingDinosaur;
 use App\Repository\CategoryRepository;
 use App\Repository\RankingDinosaurRepository;
+use App\Repository\RankingRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,10 +55,28 @@ class TopRatedDinosController extends AbstractController
 
     // Cargar el formulario para valorar una categoría
     #[Route('/top_rated_dinos/valorar/{id}', name: 'top_rated_dinos_rate_app')]
-    public function rate(Category $category): Response
+    public function rate(Category $category, RankingRepository $rankingRepo, RankingDinosaurRepository $rankingDinosaurRepo): Response
     {
+        $user = $this->getUser();
+        $userRanking = [];
+
+        if ($user) {
+            $existingRanking = $rankingRepo->findOneBy([
+                'user' => $user,
+                'category' => $category
+            ]);
+
+            if ($existingRanking) {
+                $rankingDinosaurs = $rankingDinosaurRepo->findBy(['ranking' => $existingRanking]);
+                foreach ($rankingDinosaurs as $rd) {
+                    $userRanking[$rd->getDinosaur()->getId()] = $rd->getPosition();
+                }
+            }
+        }
+
         return $this->render('topRatedDinos/topRatedDinosPost.html.twig', [
             'category' => $category,
+            'userRanking' => $userRanking,
         ]);
     }
 
@@ -66,7 +85,9 @@ class TopRatedDinosController extends AbstractController
     public function submitRating(
         Category $category,
         Request $request,
-        EntityManagerInterface $em
+        EntityManagerInterface $em,
+        RankingRepository $rankingRepo,
+        RankingDinosaurRepository $rankingDinosaurRepo
     ): Response {
 
         $user = $this->getUser();
@@ -75,11 +96,28 @@ class TopRatedDinosController extends AbstractController
             $this->addFlash('error', 'Debes iniciar sesión para votar.');
             return $this->redirectToRoute('app_login'); // O tu ruta de login
         }
-        $ranking = new Ranking();
-        $ranking->setCategory($category);
-        $ranking->setUser($user);
 
-        $em->persist($ranking);
+        // Buscar si ya existe un ranking
+        $ranking = $rankingRepo->findOneBy([
+            'user' => $user,
+            'category' => $category
+        ]);
+
+        if ($ranking) {
+            // Si existe, borramos las posiciones anteriores para guardar las nuevas
+            $oldEntries = $rankingDinosaurRepo->findBy(['ranking' => $ranking]);
+            foreach ($oldEntries as $oldEntry) {
+                $em->remove($oldEntry);
+            }
+            // Importante: hacer flush aquí o asegurar que los nuevos inserts no colisionen si hubiera checks únicos (aunque aquí borramos)
+            // En este caso, persistiremos los nuevos y al final haremos flush general.
+        } else {
+            // Si no existe, creamos uno nuevo
+            $ranking = new Ranking();
+            $ranking->setCategory($category);
+            $ranking->setUser($user);
+            $em->persist($ranking);
+        }
 
         $rankingData = $request->request->all('ranking');
 
@@ -110,7 +148,8 @@ class TopRatedDinosController extends AbstractController
     #[Route('/top_rated_dinos/ranking/categoria/{id}', name: 'top_rated_dinos_top_app')]
     public function showRankingPoints(
         Category $category,
-        RankingDinosaurRepository $rankingDinoRepo
+        RankingDinosaurRepository $rankingDinoRepo,
+        RankingRepository $rankingRepo
     ): Response
     {
         $queryData = $rankingDinoRepo->createQueryBuilder('rd')
@@ -125,13 +164,15 @@ class TopRatedDinosController extends AbstractController
             ->getResult();
 
         $totalDinos = count($queryData);
+        $totalVotes = $rankingRepo->count(['category' => $category]);
 
         $rankingEntries = [];
         foreach ($queryData as $key => $data) {
             $position = $key + 1;
+            $positionPoints = 100 / $totalDinos;
 
             if ($totalDinos > 1) {
-                $points = (($totalDinos - $position) / ($totalDinos - 1)) * 100;
+                $points = 100 + $positionPoints - ($data['avgPosition'] * $positionPoints);
             } else {
                 $points = 100;
             }
@@ -139,6 +180,7 @@ class TopRatedDinosController extends AbstractController
             $rankingEntries[] = [
                 'position' => $position,
                 'points' => (int)round($points),
+                'avgPosition' => $data['avgPosition'],
                 'dinosaur' => [
                     'name' => $data['name'],
                     'image' => $data['image'],
@@ -152,6 +194,7 @@ class TopRatedDinosController extends AbstractController
         return $this->render('topRatedDinos/topRatedDinos.html.twig', [
             'category' => $category,
             'rankingEntries' => $rankingEntries,
+            'totalVotes' => $totalVotes,
         ]);
     }
 }

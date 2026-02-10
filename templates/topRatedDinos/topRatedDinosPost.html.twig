@@ -53,7 +53,11 @@
                                         >
                                             <option value="" selected>-</option>
                                             {% for i in 1..category.dinosaurs|length %}
-                                                <option value="{{ i }}">{{ i }}º</option>
+                                                {% set selected = false %}
+                                                {% if userRanking is defined and userRanking[dino.id] is defined and userRanking[dino.id] == i %}
+                                                    {% set selected = true %}
+                                                {% endif %}
+                                                <option value="{{ i }}" {% if selected %}selected{% endif %}>{{ i }}º</option>
                                             {% endfor %}
                                         </select>
                                     </div>
