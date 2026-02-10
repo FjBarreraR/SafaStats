@@ -22,7 +22,6 @@
                         <tr>
                             <th class="py-3 ps-4">ID</th>
                             <th class="py-3">Correo Electrónico</th>
-                            <th class="py-3 text-end pe-4">Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -32,11 +31,6 @@
                                 <td class="ps-4 text-muted">#{{ loop.index }}</td>
                                 <td class="fw-bold text-dark">
                                     <i class="bi bi-envelope me-2 text-muted"></i>{{ user.email }}
-                                </td>
-                                <td class="text-end pe-4">
-                                    <a href="#" class="btn btn-sm btn-outline-primary">
-                                        <i class="bi bi-pencil"></i> Editar
-                                    </a>
                                 </td>
                             </tr>
                         <!-- Párrafo alternativo por si no hay usuarios en la base de datos -->

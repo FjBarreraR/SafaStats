@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Global Stats{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <!-- Título -->
+            <h2>Global Stats</h2>
+        </div>
+
+        <!-- Tabla -->
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <table class="table table-striped table-hover align-middle">
+                    <thead class="table-dark">
+
+                    <!-- Atributos de los Dinosaurios -->
+                    <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Diet</th>
+                        <th>Average Rating</th>
+                        <th>Reviews Count</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Cargar todos los Dinosaurios -->
+                    {% for stat in dinosaurStats %}
+                        <tr>
+                            <td>
+                                <img src="{{ stat.dinosaur.image|default('https://via.placeholder.com/50') }}"
+                                     class="rounded-circle"
+                                     alt="{{ stat.dinosaur.name }}"
+                                     style="object-fit: cover;"
+                                     width="50" height="50">
+                            </td>
+
+                            <td class="fw-bold">
+                                {{ stat.dinosaur.name }}
+                                {% if stat.dinosaur.isPopular %}
+                                    <span class="text-warning ms-1" title="Popular Dinosaur">★</span>
+                                {% endif %}
+                            </td>
+
+                            <td>{{ stat.dinosaur.type }}</td>
+
+                            <td>
+                                <span class="badge {% if 'carnivore' in stat.dinosaur.diet|lower %}bg-danger{% elseif 'herbivore' in stat.dinosaur.diet|lower %}bg-success{% else %}bg-secondary{% endif %}">
+                                    {{ stat.dinosaur.diet }}
+                                </span>
+                            </td>
+
+                            <td>
+                                {% if stat.reviewCount > 0 %}
+                                    <strong>{{ stat.averageRating|number_format(1) }}</strong> / 5
+                                {% else %}
+                                    <span class="text-muted">N/A</span>
+                                {% endif %}
+                            </td>
+
+                             <td>
+                                {{ stat.reviewCount }}
+                            </td>
+
+                            <td>
+                                <a href="{{ path('app_dinosaur_show', { id: stat.dinosaur.id }) }}" class="btn btn-sm btn-outline-primary">View</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <!-- Texto por si no hay ningun Dinosaurio -->
+                        <tr>
+                            <td colspan="7" class="text-center py-4">No dinosaurs found.</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
