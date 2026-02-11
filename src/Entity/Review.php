@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ReviewRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ReviewRepository::class)]
@@ -15,7 +16,7 @@ class Review
     #[ORM\Column(name: 'id')]
     private ?int $id = null;
 
-    #[ORM\Column(name: 'comment', length: 10000, nullable: false)]
+    #[ORM\Column(name: 'comment', type: Types::TEXT, nullable: true)]
     private ?string $comment = null;
 
     #[ORM\Column(name: 'rating', nullable: false)]

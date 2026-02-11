@@ -1,46 +1,84 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}DinoPark{% endblock %}</title>
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}DinoPark
+			{% endblock %}
+		</title>
+		<!-- Bootstrap -->
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <style>
-        .bg-dark-blue { background-color: #0d1b2a; color: white; }
-        .bg-yellow { background-color: #8B5CF6; color: #333; }
-        .bg-blue { background-color: #1976d2; color: white; }
-        .bg-danger { background-color: #10B981; color: white; }
-        .bg-green{ background-color: #10B981; color: white; }
+		<style>
+			.bg-dark-blue {
+				background-color: #0d1b2a;
+				color: white;
+			}
+			.bg-yellow {
+				background-color: #8B5CF6;
+				color: #333;
+			}
+			.bg-blue {
+				background-color: #1976d2;
+				color: white;
+			}
+			.bg-danger {
+				background-color: #10B981;
+				color: white;
+			}
+			.bg-green {
+				background-color: #10B981;
+				color: white;
+			}
 
-        body { background-color: #f8f9fa; }
+			body {
+				background-color: #f8f9fa;
+			}
 
-        /* Efecto Hover para las cards */
-        .card-hover { transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; }
-        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+			/* Efecto Hover para las cards */
+			.card-hover {
+				transition: transform 0.3s ease, box-shadow 0.3s ease;
+				cursor: pointer;
+			}
+			.card-hover:hover {
+				transform: translateY(-5px);
+				box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+			}
 
-        .icon-white { filter: brightness(0) invert(1); }
-    </style>
-    {% block stylesheets %}{% endblock %}
-</head>
-<body>
-{# Barra de navegación #}
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-    <div class="container">
-        <a class="navbar-brand" href="{{ path('app_home') }}">🦖 DinoRanking</a>
-        <div class="navbar-nav ms-auto">
-            <a class="nav-link" href="#">Personal Ranking</a>
-            {% if app.user %}
-                <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
-            {% else %}
-                <a class="nav-link" href="{{ path('app_login') }}">Login</a>
-            {% endif %}
-        </div>
-    </div>
-</nav>
+			.icon-white {
+				filter: brightness(0) invert(1);
+			}
+		</style>
+		{% block stylesheets %}{% endblock %}
+	</head>
+	<body>
+		{# Barra de navegación #}
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+			<div class="container">
+				<a class="navbar-brand" href="{{ path('app_home') }}">🦖 DinoRanking</a>
+				<div class="navbar-nav ms-auto">
+					{% if app.user %}
+						<a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
+					{% else %}
+						<a class="nav-link" href="{{ path('app_login') }}">Login</a>
+					{% endif %}
+				</div>
+			</div>
+		</nav>
 
-{% block body %}{% endblock %}
+		<div class="container mt-3">
+			{% for label, messages in app.flashes %}
+				{% for message in messages %}
+					<div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+						{{ message }}
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>
+				{% endfor %}
+			{% endfor %}
+		</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+		{% block body %}{% endblock %}
+
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
 </html>

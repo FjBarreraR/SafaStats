@@ -54,8 +54,8 @@ class ReviewController extends AbstractController
 
         $dinosaur = $dinoRepo->find($dinoId);
 
-        if (!$dinosaur || !$comment || !$rating) {
-            $this->addFlash('danger', 'Error: Asegúrate de elegir un dinosaurio y escribir un comentario.');
+        if (!$dinosaur || !$rating) {
+            $this->addFlash('danger', 'Error: Asegúrate de elegir un dinosaurio y una valoración.');
             return $this->redirectToRoute('app_reviews_latest');
         }
 
