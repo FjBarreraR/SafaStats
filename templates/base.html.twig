@@ -8,6 +8,7 @@
 		</title>
 		<!-- Bootstrap -->
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet">
 
 		<style>
 			.bg-dark-blue {
@@ -52,19 +53,21 @@
 		{% block stylesheets %}{% endblock %}
 	</head>
 	<body>
-		{# Barra de navegación #}
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-			<div class="container">
-				<a class="navbar-brand" href="{{ path('app_home') }}">🦖 DinoRanking</a>
-				<div class="navbar-nav ms-auto">
-					{% if app.user %}
-						<a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
-					{% else %}
-						<a class="nav-link" href="{{ path('app_login') }}">Login</a>
-					{% endif %}
-				</div>
-			</div>
-		</nav>
+        {% block navbar %}
+            {# Barra de navegación #}
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+                <div class="container">
+                    <a class="navbar-brand" href="{{ path('app_home') }}">🦖 DinoRanking</a>
+                    <div class="navbar-nav ms-auto">
+                        {% if app.user %}
+                            <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
+                        {% else %}
+                            <a class="nav-link" href="{{ path('app_login') }}">Login</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </nav>
+        {% endblock %}
 
 		<div class="container mt-3">
 			{% for label, messages in app.flashes %}

@@ -15,14 +15,14 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class categoryController extends AbstractController
 {
     // Cargar página principal de categoría
-    #[Route('/category', name: 'category_app')]
+    #[Route('/admin/category', name: 'category_app')]
     public function main(): Response
     {
         return $this->render('category/categoriesMain.html.twig');
     }
 
     // Cargar todas las categorías
-    #[Route('/category/all', name: 'app_category_index')]
+    #[Route('/admin/category/all', name: 'app_category_index')]
     public function seeCategories(CategoryRepository $categoryRepository): Response
     {
         return $this->render('category/seeCategories.html.twig', [
@@ -31,8 +31,8 @@ class categoryController extends AbstractController
     }
 
     // Guardar y editar categorías en base de datos junto a sus correspondientes dinosaurios
-    #[Route('/category/create', name: 'app_category_new')]
-    #[Route('/category/edit/{id}', name: 'app_category_edit', requirements: ['id' => '\d+'])]
+    #[Route('/admin/category/create', name: 'app_category_new')]
+    #[Route('/admin/category/edit/{id}', name: 'app_category_edit', requirements: ['id' => '\d+'])]
     #[IsGranted('ROLE_ADMIN')]
     public function save(
         ?Category $category,
@@ -74,7 +74,7 @@ class categoryController extends AbstractController
     }
 
     // Cargar cada categoría con sus datos
-    #[Route('/category/{id}', name: 'app_category_show', requirements: ['id' => '\d+'])]
+    #[Route('/admin/category/{id}', name: 'app_category_show', requirements: ['id' => '\d+'])]
     public function show(Category $category): Response
     {
         return $this->render('category/showCategory.html.twig', [
@@ -83,7 +83,7 @@ class categoryController extends AbstractController
     }
 
     // Eliminar una categoría con todos sus datos
-    #[Route('/category/delete/{id}', name: 'app_category_delete', requirements: ['id' => '\d+'], methods: ['POST'])]
+    #[Route('/admin/category/delete/{id}', name: 'app_category_delete', requirements: ['id' => '\d+'], methods: ['POST'])]
     #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, Category $category, EntityManagerInterface $entityManager): Response
     {

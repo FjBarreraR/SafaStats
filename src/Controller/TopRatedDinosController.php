@@ -94,25 +94,20 @@ class TopRatedDinosController extends AbstractController
 
         if (!$user) {
             $this->addFlash('error', 'Debes iniciar sesión para votar.');
-            return $this->redirectToRoute('app_login'); // O tu ruta de login
+            return $this->redirectToRoute('app_login');
         }
 
-        // Buscar si ya existe un ranking
         $ranking = $rankingRepo->findOneBy([
             'user' => $user,
             'category' => $category
         ]);
 
         if ($ranking) {
-            // Si existe, borramos las posiciones anteriores para guardar las nuevas
             $oldEntries = $rankingDinosaurRepo->findBy(['ranking' => $ranking]);
             foreach ($oldEntries as $oldEntry) {
                 $em->remove($oldEntry);
             }
-            // Importante: hacer flush aquí o asegurar que los nuevos inserts no colisionen si hubiera checks únicos (aunque aquí borramos)
-            // En este caso, persistiremos los nuevos y al final haremos flush general.
         } else {
-            // Si no existe, creamos uno nuevo
             $ranking = new Ranking();
             $ranking->setCategory($category);
             $ranking->setUser($user);
@@ -133,6 +128,8 @@ class TopRatedDinosController extends AbstractController
                 $rankingDino->setPosition((int)$positionValue);
 
                 $em->persist($rankingDino);
+
+                echo $rankingDino;
             }
         }
 

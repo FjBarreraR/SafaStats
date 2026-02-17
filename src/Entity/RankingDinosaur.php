@@ -11,7 +11,7 @@ class RankingDinosaur
 {
     // Atributos
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     #[ORM\Column(name: 'id')]
     private ?int $id = null;
 
@@ -60,5 +60,16 @@ class RankingDinosaur
     public function setRanking(?Ranking $ranking): void
     {
         $this->ranking = $ranking;
+    }
+
+    public function __toString(): string
+    {
+        return sprintf(
+            "RankingDinosaur [ID: %s] | Posición: %d | Dinosaurio: %s | Ranking ID: %s",
+            $this->id ?? 'n/a',
+            $this->position ?? 0,
+            $this->dinosaur ? $this->dinosaur->getName() : 'Sin nombre',
+            $this->ranking ? $this->ranking->getId() : 'Sin ranking'
+        );
     }
 }

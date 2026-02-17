@@ -47,7 +47,7 @@ class UserController extends AbstractController
     }
 
     // Cargar usuarios
-    #[Route('/users', name: 'users_app')]
+    #[Route('/admin/users', name: 'users_app')]
     public function index(UserRepository $userRepository): Response
     {
         return $this->render('user/seeUser.html.twig', [

@@ -24,7 +24,7 @@ class DinosaurController extends AbstractController
 //    }
 
     // Cargar toda la lista de dinosaurios
-    #[Route('/dinosaur', name: 'app_dinosaur')]
+    #[Route('/admin/dinosaur', name: 'app_dinosaur')]
     public function listDinosaurs(DinosaursRepository $repository): Response {
         $dinosaurs = $repository->findAll();
 
