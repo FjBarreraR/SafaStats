@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Resultado Carga API - DinoRanking{% endblock %}
+
+{% block body %}
+    <div class="container d-flex flex-column justify-content-start align-items-center vh-100 pt-5">
+
+        <h1 class="mb-5 text-dark fw-bold">Sincronización de API</h1>
+
+        {% if message %}
+            <div class="alert alert-{{ status }} w-75 text-center shadow-sm fs-5 mb-4" role="alert">
+                {{ message }}
+
+                {% if status == 'success' and count > 0 %}
+                    <br><small class="fw-bold">Se han procesado {{ count }} registros.</small>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <div class="row g-4 justify-content-center w-100">
+            <div class="col-12 col-md-6">
+                <div class="card text-center text-white bg-dark-blue h-100 shadow-sm border-0">
+                    <div class="card-body py-5">
+
+                        {% if status == 'success' %}
+                            <img src="/images/dinos-6.png" alt="Success" width="100" class="mb-4">
+                            <h3 class="card-title fw-bold mb-3">¡Base de datos actualizada!</h3>
+                            <p class="card-text mb-4 px-4 text-light">
+                                Los dinosaurios están listos para ser mostrados en los rankings y recibir reviews.
+                            </p>
+                        {% else %}
+                            <img src="/images/user.png" alt="Error" width="80" class="mb-4" style="filter: grayscale(100%);">
+                            <h3 class="card-title fw-bold mb-3 text-warning">Houston, tenemos un problema</h3>
+                            <p class="card-text mb-4 px-4 text-light">
+                                La API no ha respondido correctamente. Por favor, revisa el log de errores e inténtalo más tarde.
+                            </p>
+                        {% endif %}
+
+                        <a href="{{ path('admin') }}" class="btn btn-light btn-lg fw-bold px-5 rounded-pill card-hover text-dark mt-3">
+                            Volver al Panel Admin
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

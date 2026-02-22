@@ -20,36 +20,49 @@ class AdminController extends AbstractController
     }
 
     // Cargar datos a la base de datos desde la api
-    #[Route('/admin/dinosaur/load', name: 'app_admin')]
+    #[Route('/admin/loadData', name: 'app_dataLoad')]
     public function loadData(HttpClientInterface $httpClient, EntityManagerInterface $entityManager): Response
     {
-        $response = $httpClient->request('GET', 'https://dinoapi.brunosouzadev.com/api/dinosaurs');
+        $status = 'success';
+        $message = '¡Dinosaurios cargados correctamente!';
+        $content = [];
 
-        $content = $response->toArray();
+        try {
+            $response = $httpClient->request('GET', 'https://dinoapi.brunosouzadev.com/api/dinosaurs');
 
-        foreach ($content as $e) {
-            $dinosaur = new Dinosaurs();
-            $dinosaur->setName($e['name']);
-            $dinosaur->setWeight($e['weight']);
-            $dinosaur->setHeight($e['height']);
-            $dinosaur->setLength($e['length']);
-            $dinosaur->setDiet($e['diet']);
-            $dinosaur->setPeriod($e['period']);
-            $dinosaur->setExisted($e['existed']);
-            $dinosaur->setRegion($e['region']);
-            $dinosaur->setType($e['type']);
-            $dinosaur->setDescription($e['description']);
-            $dinosaur->setImage($e['image']);
-            $dinosaur->setIsPopular($e['isPopular']);
-            $dinosaur->setCode($e['_id']);
+            // Esto lanzará una excepción si el status code no es 2xx
+            $content = $response->toArray();
 
-            $entityManager->persist($dinosaur);
+            foreach ($content as $e) {
+                $dinosaur = new Dinosaurs();
+                $dinosaur->setName($e['name']);
+                $dinosaur->setWeight($e['weight']);
+                $dinosaur->setHeight($e['height']);
+                $dinosaur->setLength($e['length']);
+                $dinosaur->setDiet($e['diet']);
+                $dinosaur->setPeriod($e['period']);
+                $dinosaur->setExisted($e['existed']);
+                $dinosaur->setRegion($e['region']);
+                $dinosaur->setType($e['type']);
+                $dinosaur->setDescription($e['description']);
+                $dinosaur->setImage($e['image']);
+                $dinosaur->setIsPopular($e['isPopular']);
+                $dinosaur->setCode($e['_id']);
+
+                $entityManager->persist($dinosaur);
+            }
+
+            $entityManager->flush();
+
+        } catch (\Exception $e) {
+            $status = 'danger';
+            $message = 'Error al cargar los datos: ' . $e->getMessage();
         }
-        $entityManager->flush();
 
-        return $this->render('admin/admin.html.twig', [
-            'controller_name' => 'AdminController',
-            'content' => $content
+        return $this->render('dataLoad/dataLoad.html.twig', [
+            'status' => $status,
+            'message' => $message,
+            'count' => count($content)
         ]);
     }
 }
